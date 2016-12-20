@@ -5,34 +5,99 @@
 		<Option title="libxaos-tests" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
+		<Option virtualFolders="implementation/;interface/;" />
 		<Build>
-			<Target title="Debug">
-				<Option output="bin/Debug/libxaos-tests" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug/" />
+			<Target title="Debug_x86">
+				<Option output="bin/Debug_x86/libxaos-tests" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug_x86/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-pg" />
+					<Add option="-m32" />
 					<Add option="-g" />
 				</Compiler>
+				<Linker>
+					<Add option="-pg" />
+					<Add option="-m32" />
+				</Linker>
 			</Target>
-			<Target title="Release">
-				<Option output="bin/Release/libxaos-tests" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
+			<Target title="Release_x86">
+				<Option output="bin/Release_x86/libxaos-tests" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release_x86/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-O2" />
+					<Add option="-fomit-frame-pointer" />
+					<Add option="-fexpensive-optimizations" />
+					<Add option="-O3" />
+					<Add option="-m32" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-m32" />
+				</Linker>
+			</Target>
+			<Target title="Debug_x86_64">
+				<Option output="bin/Debug_x86_64/libxaos-tests" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug_x86_64/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-pg" />
+					<Add option="-m64" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-pg" />
+					<Add option="-m64" />
+				</Linker>
+			</Target>
+			<Target title="Release_x86_64">
+				<Option output="bin/Release_x86_64/libxaos-tests" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release_x86_64/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-fomit-frame-pointer" />
+					<Add option="-fexpensive-optimizations" />
+					<Add option="-O3" />
+					<Add option="-m64" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-m64" />
 				</Linker>
 			</Target>
 		</Build>
+		<VirtualTargets>
+			<Add alias="ALL" targets="Debug_x86;Release_x86;Debug_x86_64;Release_x86_64;" />
+		</VirtualTargets>
 		<Compiler>
+			<Add option="-Wnon-virtual-dtor" />
+			<Add option="-Wshadow" />
+			<Add option="-Winit-self" />
+			<Add option="-Wredundant-decls" />
+			<Add option="-Wcast-align" />
+			<Add option="-Wundef" />
+			<Add option="-Wfloat-equal" />
+			<Add option="-Winline" />
+			<Add option="-Wunreachable-code" />
+			<Add option="-Wmissing-declarations" />
+			<Add option="-Wmissing-include-dirs" />
+			<Add option="-Wswitch-enum" />
+			<Add option="-Wswitch-default" />
+			<Add option="-Weffc++" />
+			<Add option="-Wzero-as-null-pointer-constant" />
+			<Add option="-Wmain" />
+			<Add option="-pedantic-errors" />
+			<Add option="-pedantic" />
+			<Add option="-Wfatal-errors" />
+			<Add option="-Wextra" />
 			<Add option="-Wall" />
+			<Add option="-std=c++11" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

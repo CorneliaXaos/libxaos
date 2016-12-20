@@ -5,6 +5,11 @@
 		<Project filename="libxaos-game/libxaos-game.cbp" />
 		<Project filename="libxaos-maths/libxaos-maths.cbp" />
 		<Project filename="libxaos-render/libxaos-render.cbp" />
-		<Project filename="libxaos-tests/libxaos-tests.cbp" />
+		<Project filename="libxaos-tests/libxaos-tests.cbp">
+			<Depends filename="libxaos-core/libxaos-core.cbp" />
+			<Depends filename="libxaos-game/libxaos-game.cbp" />
+			<Depends filename="libxaos-maths/libxaos-maths.cbp" />
+			<Depends filename="libxaos-render/libxaos-render.cbp" />
+		</Project>
 	</Workspace>
 </CodeBlocks_workspace_file>
