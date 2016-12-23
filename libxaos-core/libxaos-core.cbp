@@ -111,8 +111,9 @@
 		<Unit filename="interface/memory/allocator/impl/FixedSizeAllocator.h" />
 		<Unit filename="interface/memory/allocator/impl/NativeAllocator.h" />
 		<Unit filename="interface/memory/memory.h" />
-		<Unit filename="interface/memory/store/Store.h" />
+		<Unit filename="interface/memory/store/IStore.h" />
 		<Unit filename="interface/memory/store/impl/DynamicStore.h" />
+		<Unit filename="interface/memory/store/impl/StaticStore-tpp.h" />
 		<Unit filename="interface/memory/store/impl/StaticStore.h" />
 		<Unit filename="interface/memory/utility/alignment.h" />
 		<Extensions>

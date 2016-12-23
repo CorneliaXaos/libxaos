@@ -48,6 +48,6 @@ namespace libxaos {
 }
 
 // Bring in template definitions.
-#include "StaticStore.tpp.h"
+#include "StaticStore-tpp.h"
 
 #endif //   LIBXAOS_MEMORY_STATIC_STORE_H
