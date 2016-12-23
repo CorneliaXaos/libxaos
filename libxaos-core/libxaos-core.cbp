@@ -5,7 +5,6 @@
 		<Option title="libxaos-core" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="interface/;implementation/;interface/memory/;interface/memory/allocator/;interface/memory/store/;interface/memory/utility/;interface/memory/allocator/impl/;interface/memory/store/impl/;" />
 		<Build>
 			<Target title="Debug_x86">
 				<Option output="bin/Debug_x86/xaos-core" prefix_auto="1" extension_auto="1" />
@@ -107,6 +106,15 @@
 			<Add option="-Wall" />
 			<Add option="-std=c++11" />
 		</Compiler>
+		<Unit filename="interface/memory/allocator/Allocator.h" />
+		<Unit filename="interface/memory/allocator/impl/BlockAllocator.h" />
+		<Unit filename="interface/memory/allocator/impl/FixedSizeAllocator.h" />
+		<Unit filename="interface/memory/allocator/impl/NativeAllocator.h" />
+		<Unit filename="interface/memory/memory.h" />
+		<Unit filename="interface/memory/store/Store.h" />
+		<Unit filename="interface/memory/store/impl/DynamicStore.h" />
+		<Unit filename="interface/memory/store/impl/StaticStore.h" />
+		<Unit filename="interface/memory/utility/alignment.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />
