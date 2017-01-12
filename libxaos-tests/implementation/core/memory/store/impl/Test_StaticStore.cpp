@@ -13,11 +13,16 @@
 #include "catch.hpp"
 
 // Define some types.
-using Store128 = libxaos::memory::StaticStore<128, 4, 0>;
-using Store256 = libxaos::memory::StaticStore<256, 4, 1>;
-using Store512 = libxaos::memory::StaticStore<512, 4, 2>;
+constexpr short Store128_ALIGN = 4;
+constexpr short Store256_ALIGN = 64;
+constexpr short Store512_ALIGN = 128;
 
-TEST_CASE("CORE:MEMORY/STORE/IMPL/StaticStore", "[core][memory]") {
+using Store128 = libxaos::memory::StaticStore<128, Store128_ALIGN, 0>;
+using Store256 = libxaos::memory::StaticStore<256, Store256_ALIGN, 0>;
+using Store512 = libxaos::memory::StaticStore<512, Store512_ALIGN, 0>;
+
+TEST_CASE("CORE:MEMORY/STORE/IMPL/StaticStore | Stores hold data.",
+        "[core][memory]") {
 
     // create our stores to test
     Store128 storeA {};
@@ -56,4 +61,22 @@ TEST_CASE("CORE:MEMORY/STORE/IMPL/StaticStore", "[core][memory]") {
 
         index++;
     }
+}
+
+TEST_CASE("CORE:MEMORY/STORE/IMPL/StaticStore | Stores are aligned.",
+        "[core][memory][!mayfail]") {
+
+    // create our stores
+    Store128 storeA {};
+    Store256 storeB {};
+    Store512 storeC {};
+
+    // Test alignments
+    uintptr_t addressA = reinterpret_cast<uintptr_t>(storeA.getRawStorage());
+    uintptr_t addressB = reinterpret_cast<uintptr_t>(storeB.getRawStorage());
+    uintptr_t addressC = reinterpret_cast<uintptr_t>(storeC.getRawStorage());
+
+    REQUIRE(addressA % Store128_ALIGN == 0);
+    REQUIRE(addressB % Store256_ALIGN == 0);
+    REQUIRE(addressC % Store512_ALIGN == 0);
 }
