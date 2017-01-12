@@ -15,7 +15,7 @@ namespace libxaos {
 
         template<size_t N, short A, int ID>
         inline uint8_t* StaticStore<N, A, ID>::getRawStorage() {
-            return &(this->_store);
+            return &(this->_store[0]);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace libxaos {
             static_assert(N > 0, "A Store must have non-zero storage size!");
 
             public:
-                virtual ~Store() {}; //!< Virtual No-Action Destructor
+                virtual ~IStore() {} //!< Virtual No-Action Destructor
 
                 /**
                  *  @brief Returns a "byte" pointer to the beginning of the data

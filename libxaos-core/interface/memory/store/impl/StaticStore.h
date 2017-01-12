@@ -29,8 +29,8 @@ namespace libxaos {
         class StaticStore : public IStore<N, A> {
 
             public:
-                StaticStore();
-                ~StaticStore();
+                StaticStore() {}
+                ~StaticStore() {}
 
                 //! @todo Copy and Move for the stores? Am not sure...
 
