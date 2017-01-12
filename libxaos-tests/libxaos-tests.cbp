@@ -96,7 +96,15 @@
 			<Add option="-Wall" />
 			<Add option="-std=c++11" />
 			<Add option="-fexceptions" />
+			<Add directory="../libxaos-core/interface/" />
+			<Add directory="../libxaos-game/interface/" />
+			<Add directory="../libxaos-maths/interface/" />
+			<Add directory="../libxaos-render/interface/" />
+			<Add directory="interface" />
 		</Compiler>
+		<Unit filename="implementation/core/memory/store/impl/Test_StaticStore.cpp" />
+		<Unit filename="implementation/main.cpp" />
+		<Unit filename="interface/catch.hpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
