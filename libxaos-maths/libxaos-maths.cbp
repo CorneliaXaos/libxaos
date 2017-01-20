@@ -106,6 +106,8 @@
 			<Add option="-Wall" />
 			<Add option="-std=c++11" />
 		</Compiler>
+		<Unit filename="interface/Vector-tpp.h" />
+		<Unit filename="interface/Vector.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />
