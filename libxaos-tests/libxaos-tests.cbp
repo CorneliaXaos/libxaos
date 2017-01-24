@@ -104,6 +104,7 @@
 		</Compiler>
 		<Unit filename="implementation/core/memory/store/impl/Test_StaticStore.cpp" />
 		<Unit filename="implementation/main.cpp" />
+		<Unit filename="implementation/maths/Test_Vector.cpp" />
 		<Unit filename="interface/catch.hpp" />
 		<Extensions>
 			<code_completion />

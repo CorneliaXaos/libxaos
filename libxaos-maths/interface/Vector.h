@@ -86,6 +86,13 @@ namespace libxaos {
                 std::array<T, N> _data;
         };
 
+        //! Checks Vector Equality
+        template<typename T, int N>
+        inline bool operator==(const Vector<T, N>&, const Vector<T, N>&);
+        //! Checks Vector Inequality
+        template<typename T, int N>
+        inline bool operator!=(const Vector<T, N>&, const Vector<T, N>&);
+
         //! Negates a Vector
         template<typename T, int N>
         inline Vector<T, N> operator-(const Vector<T, N>&);
@@ -93,6 +100,9 @@ namespace libxaos {
         //! Scales (multiplication) and returns a new Vector.
         template<typename T, int N>
         inline Vector<T, N> operator*(const Vector<T, N>&, T);
+        //! Scales (multiplication) and returns a new Vector.
+        template<typename T, int N>
+        inline Vector<T, N> operator*(T, const Vector<T, N>&);
         //! Scales (multiplication) the argument Vector.
         template<typename T, int N>
         inline Vector<T, N> operator*=(Vector<T, N>&, T);
