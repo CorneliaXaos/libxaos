@@ -9,8 +9,6 @@ namespace libxaos {
     namespace maths {
 
         namespace {
-            template<typename T>
-            using IsArithmetic = std::is_arithmetic<T>::value;
 
             template<bool B, typename T>
             using EnableIf = typename std::enable_if<B, T>::type;
@@ -34,12 +32,13 @@ namespace libxaos {
          */
         template<typename T, int N>
         class Vector {
-            static_assert(IsArithmetic<T>, "Vectors must be arithmetic!");
+            static_assert(std::is_arithmetic<T>::value,
+                    "Vectors must be arithmetic!");
 
             public:
                 Vector();
                 //! Initializes the Vector from a List.
-                Vector(std::initializer_list<T>);
+                explicit Vector(std::initializer_list<T>);
                 ~Vector();
 
                 Vector(const Vector<T, N>&);
@@ -52,21 +51,21 @@ namespace libxaos {
                 inline EnableIf<HasIndex(M, 0), T> x() const;
                 //! Sets the first (x) element of the Vector.
                 template<int M = N>
-                inline EnableIF<HasIndex(M, 0), void> x(T);
+                inline EnableIf<HasIndex(M, 0), void> x(T);
 
                 //! Accesses the second (y) element of the Vector.
                 template<int M = N>
                 inline EnableIf<HasIndex(M, 1), T> y() const;
                 //! Sets the second (y) element of the Vector.
                 template<int M = N>
-                inline EnableIF<HasIndex(M, 1), void> y(T);
+                inline EnableIf<HasIndex(M, 1), void> y(T);
 
                 //! Accesses the third (z) element of the Vector.
                 template<int M = N>
                 inline EnableIf<HasIndex(M, 2), T> z() const;
                 //! Sets the third (z) element of the Vector.
                 template<int M = N>
-                inline EnableIF<HasIndex(M, 2), void> z(T);
+                inline EnableIf<HasIndex(M, 2), void> z(T);
 
                 //! Accesses/Sets the Nth element of the Vector.
                 inline T& operator[](int);
@@ -84,6 +83,11 @@ namespace libxaos {
             private:
                 //! The internal data held within this Vector.
                 std::array<T, N> _data;
+
+                //! Allow the equality operator below to access _data
+                template<typename S, int M>
+                friend bool operator==(const Vector<S, M>&,
+                        const Vector<S, M>&);
         };
 
         //! Checks Vector Equality
@@ -105,28 +109,37 @@ namespace libxaos {
         inline Vector<T, N> operator*(T, const Vector<T, N>&);
         //! Scales (multiplication) the argument Vector.
         template<typename T, int N>
-        inline Vector<T, N> operator*=(Vector<T, N>&, T);
+        inline Vector<T, N>& operator*=(Vector<T, N>&, T);
 
         //! Scales (division) and returns a new Vector.
         template<typename T, int N>
         inline Vector<T, N> operator/(const Vector<T, N>&, T);
         //! Scales (division) the argument Vector.
         template<typename T, int N>
-        inline Vector<T, N> operator/=(Vector<T, N>&, T);
+        inline Vector<T, N>& operator/=(Vector<T, N>&, T);
 
         //! Sums and returns a new Vector.
         template<typename T, int N>
         inline Vector<T, N> operator+(const Vector<T, N>&, const Vector<T, N>&);
         //! Sums the argument vectors and stores the result in the first.
         template<typename T, int N>
-        inline Vector<T, N> operator+=(Vector<T,N>&, const Vector<T, N>&);
+        inline Vector<T, N>& operator+=(Vector<T,N>&, const Vector<T, N>&);
+        //! Sums each Vector component with a scalar.
+        template<typename T, int N>
+        inline Vector<T, N> operator+(const Vector<T, N>&, T);
+        //! Sums each Vector component with a scalar.
+        template<typename T, int N>
+        inline Vector<T, N> operator+(T, const Vector<T, N>&);
 
         //! Differences and returns a new Vector.
         template<typename T, int N>
         inline Vector<T, N> operator-(const Vector<T, N>&, const Vector<T, N>&);
         //! Differences the argument vectors and stores the result in the first.
         template<typename T, int N>
-        inline Vector<T, N> operator-=(Vector<T,N>&, const Vector<T, N>&);
+        inline Vector<T, N>& operator-=(Vector<T, N>&, const Vector<T, N>&);
+        //! Differences each Vector component with a scalar.
+        template<typename T, int N>
+        inline Vector<T, N> operator-(const Vector<T, N>&, T);
 
         //! Calculates the Magnitude of a Vector.
         template<typename T, int N>
@@ -143,5 +156,8 @@ namespace libxaos {
         inline T cross(const Vector<T, N>&, const Vector<T, N>&);
     }
 }
+
+// Pull in implementations
+#include "Vector-tpp.h"
 
 #endif   // LIBXAOS_MATHS_VECTOR_H
