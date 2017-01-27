@@ -30,9 +30,9 @@
     REQUIRE(ent1.getName() == "");
     REQUIRE(ent1.getPosition() == IntVector3{});
     REQUIRE(ent2.getName() == "I AM ENTITY");
-    REQUIRE(ent3.getPosition() == IntVector3{1, 1, 1});
+    REQUIRE((ent3.getPosition() == IntVector3{1, 1, 1}));
     REQUIRE(ent4.getName() == "I AM DIFFERENT ENTITY");
-    REQUIRE(ent4.getPosition() == FloatVector4{0.5F, 1.0F, 1.5F, 2.0F});
+    REQUIRE((ent4.getPosition() == FloatVector4{0.5F, 1.0F, 1.5F, 2.0F}));
  }
 
  TEST_CASE("GAME:IEntity | Can Access / Modify Entity Name", "[game]") {

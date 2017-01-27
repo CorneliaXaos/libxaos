@@ -37,6 +37,8 @@ namespace libxaos {
                     "The world's dimension type must be arithmetic!");
 
             public:
+
+
                 IEntity();
                 //! Construct this Entity with the provided name.
                 explicit IEntity(const std::string&);
@@ -66,11 +68,13 @@ namespace libxaos {
                 std::string _name;
                 //! The position of this entity.
                 Vector<T, N> _position;
+
+                //! @todo replace this faulty system with a real uuid system
                 //! This entity's ID as computed by a global static variable.
                 uintmax_t _entityID;
 
-                //! An internal class variable for assigning entity IDs.
-                static uintmax_t entity_count;
+                //! Used by instances to acquire a UUID
+                static uintmax_t acquireID();
 
                 //! Allow the equality operator to access _entityID
                 template<typename S, int M>
