@@ -37,8 +37,6 @@ namespace libxaos {
                     "The world's dimension type must be arithmetic!");
 
             public:
-
-
                 IEntity();
                 //! Construct this Entity with the provided name.
                 explicit IEntity(const std::string&);
