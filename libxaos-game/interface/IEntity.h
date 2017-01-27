@@ -66,7 +66,7 @@ namespace libxaos {
                 std::string _name;
                 //! The position of this entity.
                 Vector<T, N> _position;
-                //! This entities ID as computed by a global static variable.
+                //! This entity's ID as computed by a global static variable.
                 uintmax_t _entityID;
 
                 //! An internal class variable for assigning entity IDs.
