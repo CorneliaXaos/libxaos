@@ -109,6 +109,8 @@
 		</Compiler>
 		<Unit filename="interface/IEntity-tpp.h" />
 		<Unit filename="interface/IEntity.h" />
+		<Unit filename="interface/IEntityController-tpp.h" />
+		<Unit filename="interface/IEntityController.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

@@ -54,4 +54,7 @@ namespace libxaos {
     }
 }
 
+// Pull in implementations
+#include "IEntityController-tpp.h"
+
 #endif   // LIBXAOS_GAME_IENTITYCONTROLLER_H

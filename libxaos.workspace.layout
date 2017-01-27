@@ -2,5 +2,5 @@
 <CodeBlocks_workspace_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveProject path="libxaos-tests/libxaos-tests.cbp" />
-	<PreferredTarget name="ALL" />
+	<PreferredTarget name="Release_x86" />
 </CodeBlocks_workspace_layout_file>

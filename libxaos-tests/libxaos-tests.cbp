@@ -15,6 +15,7 @@
 					<Add option="-pg" />
 					<Add option="-m32" />
 					<Add option="-g" />
+					<Add option="-D_DEBUG" />
 				</Compiler>
 				<Linker>
 					<Add option="-pg" />
@@ -33,7 +34,6 @@
 					<Add option="-m32" />
 				</Compiler>
 				<Linker>
-					<Add option="-s" />
 					<Add option="-m32" />
 				</Linker>
 			</Target>
@@ -46,6 +46,7 @@
 					<Add option="-pg" />
 					<Add option="-m64" />
 					<Add option="-g" />
+					<Add option="-D_DEBUG" />
 				</Compiler>
 				<Linker>
 					<Add option="-pg" />
@@ -104,6 +105,7 @@
 		</Compiler>
 		<Unit filename="implementation/core/memory/store/impl/Test_StaticStore.cpp" />
 		<Unit filename="implementation/game/Test_IEntity.cpp" />
+		<Unit filename="implementation/game/Test_IEntityController.cpp" />
 		<Unit filename="implementation/main.cpp" />
 		<Unit filename="implementation/maths/Test_Vector.cpp" />
 		<Unit filename="interface/catch.hpp" />

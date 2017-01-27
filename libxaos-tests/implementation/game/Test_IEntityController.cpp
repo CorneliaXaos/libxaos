@@ -23,12 +23,15 @@ using IEntityController = libxaos::game::IEntityController<int, 3>;
 // This class updates an entity to have a particular name and position.
 class Controller : public IEntityController {
     public:
+        Controller() : IEntityController() {}
+        Controller(Entity* entPtr) : IEntityController(entPtr) {}
+        ~Controller() {}
         void update() const override final {
             Entity* entity = getEntity();
             entity->setName("NAME UPDATED");
             entity->setPosition(IntVector3{1, 1, 1});
         }
-}
+};
 
 TEST_CASE("GAME:IEntityController | Can Create Controllers", "[game]") {
     // Make some controllers.
@@ -54,5 +57,5 @@ TEST_CASE("GAME:IEntityController | Can Update Attached Entity", "[game]") {
     controller.update();
 
     REQUIRE(ent.getName() == "NAME UPDATED");
-    REQUIRE(ent.getPosition() == IntVector3{1, 1, 1});
+    REQUIRE((ent.getPosition() == IntVector3{1, 1, 1}));
 }
