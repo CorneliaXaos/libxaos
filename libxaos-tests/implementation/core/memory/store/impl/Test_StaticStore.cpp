@@ -16,10 +16,12 @@
 constexpr short Store128_ALIGN = 4;
 constexpr short Store256_ALIGN = 64;
 constexpr short Store512_ALIGN = 128;
+constexpr short Store4096_ALIGN = 4096;  // THIS IS RIDICULOUS
 
 using Store128 = libxaos::memory::StaticStore<128, Store128_ALIGN, 0>;
 using Store256 = libxaos::memory::StaticStore<256, Store256_ALIGN, 0>;
 using Store512 = libxaos::memory::StaticStore<512, Store512_ALIGN, 0>;
+using Store4096 = libxaos::memory::StaticStore<4096, Store4096_ALIGN, 0>;
 
 TEST_CASE("CORE:MEMORY/STORE/IMPL/StaticStore | Stores hold data.",
         "[core][memory]") {
@@ -70,13 +72,16 @@ TEST_CASE("CORE:MEMORY/STORE/IMPL/StaticStore | Stores are aligned.",
     Store128 storeA {};
     Store256 storeB {};
     Store512 storeC {};
+    Store4096 storeD {};
 
     // Test alignments
     uintptr_t addressA = reinterpret_cast<uintptr_t>(storeA.getRawStorage());
     uintptr_t addressB = reinterpret_cast<uintptr_t>(storeB.getRawStorage());
     uintptr_t addressC = reinterpret_cast<uintptr_t>(storeC.getRawStorage());
+    uintptr_t addressD = reinterpret_cast<uintptr_t>(storeD.getRawStorage());
 
     REQUIRE(addressA % Store128_ALIGN == 0);
     REQUIRE(addressB % Store256_ALIGN == 0);
     REQUIRE(addressC % Store512_ALIGN == 0);
+    REQUIRE(addressD % Store4096_ALIGN == 0);
 }

@@ -14,7 +14,7 @@ namespace libxaos {
         inline void Stopwatch::tick() {
             _frame = (_frame + 1) % _frameCount;
             Clock::TimePoint time = Clock::getTime();
-            _frames[i] = time - _time;
+            _frames[_frame] = time - _time;
             _time = time;
 
             if (_framesWritten < _frameCount)
@@ -23,7 +23,7 @@ namespace libxaos {
         inline void Stopwatch::restart() {
             // Reset Frames
             for (int i = 0; i < _frameCount; i++) {
-                _frames[i] = Clock::Duration::zero;
+                _frames[i] = Clock::Duration::zero();
             }
 
             // Reset Tracking Points
@@ -35,15 +35,18 @@ namespace libxaos {
         }
 
         // Evaluation Operations
-        inline Clock::Duration getFrameTime() const {
+        inline Clock::Duration Stopwatch::getFrameTime() const {
             return _frames[_frame];
         }
-        inline Clock::Duration getAverageTime() const {
-            Clock::Duration sum = Clock::Duration::zero;
+        inline Clock::Duration Stopwatch::getAverageTime() const {
+            Clock::Duration sum = Clock::Duration::zero();
             for (int i = 0; i < _framesWritten; i++) {
                 sum += _frames[i];
             }
-            return sum / _framesWritten;
+            if (_framesWritten != 0)
+                return sum / _framesWritten;
+            else
+                return Clock::Duration::zero();
         }
     }
 }

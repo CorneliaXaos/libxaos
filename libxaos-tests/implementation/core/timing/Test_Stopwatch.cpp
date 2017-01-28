@@ -15,8 +15,8 @@
 
 #include "catch.hpp"
 
-// Define a few types
-using Stopwatch = libxaos::timing::Stopwatch;
+// Use a namespace
+using namespace libxaos::timing;
 
 TEST_CASE("CORE:TIMING/Stopwatch | Can Create Stopwatches", "[core]") {
     // Make some watches! :D
@@ -31,7 +31,7 @@ TEST_CASE("CORE:TIMING/Stopwatch | Can tick and restart watches", "[core]") {
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
     watch.tick();
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    watch.reset();
+    watch.restart();
 
     // Again, if this compiles without error and executes no problems!
     // We'll test these results specifically in the following case.
@@ -47,7 +47,7 @@ TEST_CASE("CORE:TIMING/Stopwatch | Can Check Frame Times", "[core]") {
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
     watch2.tick();
     Clock::Duration duration2 = watch2.getAverageTime();
-    watch2.reset();
+    watch2.restart();
     Clock::Duration duration3 = watch2.getFrameTime();
     Clock::Duration duration4 = watch2.getAverageTime();
 
@@ -56,6 +56,6 @@ TEST_CASE("CORE:TIMING/Stopwatch | Can Check Frame Times", "[core]") {
     REQUIRE(duration2 > std::chrono::milliseconds(80));
 
     // These should be Zero
-    REQUIRE(duration3 == Clock::Duration::zero);
-    REQUIRE(duration4 == Clock::Duration::zero);
+    REQUIRE(duration3 == Clock::Duration::zero());
+    REQUIRE(duration4 == Clock::Duration::zero());
 }

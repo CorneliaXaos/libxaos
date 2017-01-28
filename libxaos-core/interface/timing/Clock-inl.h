@@ -1,14 +1,12 @@
 /**
  *  @file Clock.cpp
- *  @brief Implements: libxaos-core:timing/Clock.h
+ *  @brief Inline Implements for: libxaos-core:timing/Clock.h
  *
- *  This file provides implementations for the wrappers in the
+ *  This file provides inline implementations for the wrappers in the
  *  libxaos::timing::Clock namespace.
  */
 
 #include <chrono>
-
-#include "timing/Clock.h"
 
 namespace libxaos {
     namespace timing {

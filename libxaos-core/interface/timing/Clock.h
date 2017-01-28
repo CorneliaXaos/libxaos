@@ -18,9 +18,9 @@ namespace libxaos {
         namespace Clock {
 
             //! A wrapper around the high_resolution_clock's duration type.
-            typedef Duration std::chrono::high_resolution_clock::duration;
+            typedef std::chrono::high_resolution_clock::duration Duration;
             //! A wrapper around the high_resolution_clock's time_point type.
-            typedef TimePoint std::chrono::high_resolution_clock::time_point;
+            typedef std::chrono::high_resolution_clock::time_point TimePoint;
 
             //! Obtains the current time.
             inline TimePoint getTime();
@@ -28,5 +28,8 @@ namespace libxaos {
 
     }
 }
+
+// Pull in implementations
+#include "timing/Clock-inl.h"
 
 #endif   // LIBXAOS_CORE_TIMING_CLOCK_H

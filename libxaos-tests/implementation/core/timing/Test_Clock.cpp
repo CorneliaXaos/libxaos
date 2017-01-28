@@ -12,12 +12,14 @@
 
 #include "catch.hpp"
 
-// Define a few... types?
-using Clock = libxaos::timing::Clock;
+// Use a namespace
+using namespace libxaos::timing;
 
 TEST_CASE("CORE:TIMING/Clock | Can Access the Clock", "[core][timing]") {
     // This is hard to test.. will just see that it works.
-    volatile Clock::TimePoint time = Clock::getTime();
+    Clock::TimePoint time = Clock::getTime();
+
+    REQUIRE(time != Clock::TimePoint::min());
 }
 
 TEST_CASE("CORE:TIMING/Clock | Clock Actually Represents Time",
@@ -25,7 +27,7 @@ TEST_CASE("CORE:TIMING/Clock | Clock Actually Represents Time",
     Clock::TimePoint timeStart = Clock::getTime();
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
     Clock::TimePoint timeEnd = Clock::getTime();
-    Clock::Duration duration = timeEnd - start;
+    Clock::Duration duration = timeEnd - timeStart;
 
     // I highly expect it to be AT LEAST this accurate.
     REQUIRE(duration > std::chrono::milliseconds(80));

@@ -39,7 +39,7 @@ namespace libxaos {
                 //! The last time the clock was ticked
                 Clock::TimePoint _time;
                 //! The array of data points.  Dynamically allocated.
-                Clock::Duration _frames[];
+                Clock::Duration* _frames;
                 //! The count of data points in this Stopwatch.
                 unsigned short _frameCount;
                 //! Current data point (Written To)
@@ -52,6 +52,6 @@ namespace libxaos {
 }
 
 // Pull in implementations
-#include "timing/Clock-inl.h"
+#include "timing/Stopwatch-inl.h"
 
 #endif   // LIBXAOS_CORE_TIMING_STOPWATCH_H

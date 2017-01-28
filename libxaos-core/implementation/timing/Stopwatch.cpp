@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "timing/Clock.h"
+#include "timing/Stopwatch.h"
 
 namespace libxaos {
     namespace timing {
@@ -15,7 +16,7 @@ namespace libxaos {
         // Constructors
         Stopwatch::Stopwatch() : Stopwatch(1) {}
         Stopwatch::Stopwatch(unsigned short frames) :
-                _time(Clock::getTime()), _frames(new Duration[frames]),
+                _time(Clock::getTime()), _frames(new Clock::Duration[frames]),
                 _frameCount(frames), _frame(frames - 1), _framesWritten(0) {
             tick(); // Creating the Stopwatch starts its ticking.
         }
@@ -27,21 +28,21 @@ namespace libxaos {
         // Copy / Move Semantics
         Stopwatch::Stopwatch(const Stopwatch& other) :
                 _time(Clock::getTime()),
-                _frames(new Duration[other._frames]),
-                _frameCount(other._frames), _frame(other._frame),
+                _frames(new Clock::Duration[other._frameCount]),
+                _frameCount(other._frameCount), _frame(other._frame),
                 _framesWritten(other._framesWritten) {
             for (int i = 0; i < _frameCount; i++) {
                 _frames[i] = other._frames[i];
             }
         }
-        Stopwatch& Stopwatch::Stopwatch(const Stopwatch& other) {
+        Stopwatch& Stopwatch::operator=(const Stopwatch& other) {
             if (this != &other) {
                 // Copy Time
                 _time = other._time;
 
                 // Copy _frames
                 if (_frames) delete[] _frames;
-                _frames = new Duration[_frameCount];
+                _frames = new Clock::Duration[_frameCount];
 
                 for (int i = 0; i < _frameCount; i++) {
                     _frames[i] = other._frames[i];
