@@ -4,17 +4,14 @@
 #include <array>
 #include <chrono>
 
+#include "timing/Clock.h"
+
 namespace libxaos {
     namespace timing {
 
         class Stopwatch {
 
             public:
-
-                //! A wrapper around the high_resolution_clock's duration type
-                typedef Duration std::chrono::high_resolution_clock::duration;
-                //! A wrapper around the high_resolution_clock's time_point type
-                typedef Time std::chrono::high_resolution_clock::time_point;
 
                 //! Creates a Stopwatch.  The watch starts ticking the moment
                 //! it's created.

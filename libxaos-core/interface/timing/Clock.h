@@ -1,9 +1,10 @@
 #ifndef     LIBXAOS_CORE_TIMING_CLOCK_H
 #define     LIBXAOS_CORE_TIMING_CLOCK_H
 
+#include <chrono>
+
 namespace libxaos {
     namespace timing {
-
 
         /**
          *  @brief Wraps the std::chrono::high_resolution_clock to make it
