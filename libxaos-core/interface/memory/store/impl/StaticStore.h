@@ -1,5 +1,5 @@
-#ifndef     LIBXAOS_MEMORY_STATIC_STORE_H
-#define     LIBXAOS_MEMORY_STATIC_STORE_H
+#ifndef     LIBXAOS_CORE_MEMORY_STATIC_STORE_H
+#define     LIBXAOS_CORE_MEMORY_STATIC_STORE_H
 
 #include <cstdint>
 #include <cstdlib>
@@ -50,4 +50,4 @@ namespace libxaos {
 // Bring in template definitions.
 #include "StaticStore-tpp.h"
 
-#endif //   LIBXAOS_MEMORY_STATIC_STORE_H
+#endif //   LIBXAOS_CORE_MEMORY_STATIC_STORE_H

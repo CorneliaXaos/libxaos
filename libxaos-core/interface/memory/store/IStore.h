@@ -1,5 +1,5 @@
-#ifndef     LIBXAOS_MEMORY_STORE_H
-#define     LIBXAOS_MEMORY_STORE_H
+#ifndef     LIBXAOS_CORE_MEMORY_STORE_H
+#define     LIBXAOS_CORE_MEMORY_STORE_H
 
 #include <cstdint>
 #include <cstdlib>
@@ -46,4 +46,4 @@ namespace libxaos {
     }
 }
 
-#endif //   LIBXAOS_MEMORY_STORE_STORE_H
+#endif //   LIBXAOS_CORE_MEMORY_STORE_STORE_H

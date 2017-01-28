@@ -11,7 +11,13 @@
         template<typename T, int N>
         uintmax_t IEntity<T, N>::acquireID() {
             static uintmax_t entity_count = 0;
-            return entity_count++;
+            entity_count++;
+            #ifdef _DEBUG
+                if (entity_count == 0) {
+                    //! @todo debug emit that entity IDs have looped.
+                }
+            #endif
+            return entity_count;
         }
 
         // Constructors
@@ -26,13 +32,7 @@
         template<typename T, int N>
         IEntity<T, N>::IEntity(const std::string& name,
                 const Vector<T, N>& position) : _name(name),
-                _position(position), _entityID(acquireID()) {
-            #ifdef _DEBUG
-                if (entity_count == 0) {
-                    //! @todo debug emit that entity IDs have looped.
-                }
-            #endif
-        }
+                _position(position), _entityID(acquireID()) {}
         template<typename T, int N>
         IEntity<T, N>::~IEntity() {} // nothing to clean up
 
