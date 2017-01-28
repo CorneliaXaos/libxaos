@@ -26,23 +26,32 @@ namespace libxaos {
                 Stopwatch& operator=(Stopwatch&&);
 
                 //! Ticks this Stopwatch.
-                void tick();
+                inline void tick();
                 //! Restarts this Stopwatch.
-                void restart();
+                inline void restart();
 
                 //! Returns the current frame's time
-                inline Duration getFrameTime() const;
+                inline Clock::Duration getFrameTime() const;
                 //! Returns the average frame time (if it is tracking averages)
-                inline Duration getAverageTime() const;
+                inline Clock::Duration getAverageTime() const;
 
             private:
+                //! The last time the clock was ticked
+                Clock::TimePoint _time;
                 //! The array of data points.  Dynamically allocated.
-                Duration _frames[];
+                Clock::Duration _frames[];
                 //! The count of data points in this Stopwatch.
                 unsigned short _frameCount;
+                //! Current data point (Written To)
+                unsigned short _frame;
+                //! Number of data points written to. (capped to _frameCount)
+                unsigned short _framesWritten;
         };
 
     }
 }
+
+// Pull in implementations
+#include "timing/Clock-inl.h"
 
 #endif   // LIBXAOS_CORE_TIMING_STOPWATCH_H

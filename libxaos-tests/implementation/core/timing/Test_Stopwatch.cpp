@@ -47,8 +47,15 @@ TEST_CASE("CORE:TIMING/Stopwatch | Can Check Frame Times", "[core]") {
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
     watch2.tick();
     Clock::Duration duration2 = watch2.getAverageTime();
+    watch2.reset();
+    Clock::Duration duration3 = watch2.getFrameTime();
+    Clock::Duration duration4 = watch2.getAverageTime();
 
     // They should AT LEAST be this accurate.  Preferably a hell of a lot more.
     REQUIRE(duration1 > std::chrono::milliseconds(80));
     REQUIRE(duration2 > std::chrono::milliseconds(80));
+
+    // These should be Zero
+    REQUIRE(duration3 == Clock::Duration::zero);
+    REQUIRE(duration4 == Clock::Duration::zero);
 }
