@@ -5,42 +5,48 @@ namespace libxaos {
     namespace pointers {
         namespace internal { // an extra namespace.. just to deter outside use
 
-            enum PointerType {
-                PLAIN_TYPE,
-                ARRAY_TYPE
-            };
-
+            template<typename T>
             class ControlBlock {
 
                 public:
-                    //! Constructs a ControlBlock from a void pointer and the
-                    //! PointerType (Plain or Array)
-                    ControlBlock(void*, PointerType);
+
+                    enum ReferenceType {
+                        STRONG,
+                        WEAK
+                    };
+
+                    //! Constructs a ControlBlock from a T pointer
+                    ControlBlock(T*);
                     ~ControlBlock();
 
                     //! Should not be copy constructed
-                    ControlBlock(const ControlBlock&) = delete;
+                    ControlBlock(const ControlBlock<T>&) = delete;
                     //! Should not be copy assigned
-                    ControlBlock& operator=(const ControlBlock&) = delete;
+                    ControlBlock<T>& operator=(const ControlBlock<T>&) = delete;
                     //! Should not be move constructed
-                    ControlBlock(ControlBlock&&) = delete;
+                    ControlBlock(ControlBlock<T>&&) = delete;
                     //! Should not be move assigned.
-                    CotnrolBlock& operator=(ControlBlock&&) = delete;
+                    CotnrolBlock<T>& operator=(ControlBlock<T>&&) = delete;
 
-                    //! Returns a StrongPointer
-                    template<typename T>
-                    StrongPointer<T>
+                    //! Returns the pointer
+                    T* getPointer() const;
+
+                    //! Increment reference
+                    void incrementReference(ReferenceType);
+                    //! Decrement reference
+                    void decrementReference(ReferenceType);
 
                 private:
-                    void* _pointer;
-                    PointerType _type;
+                    T* _pointer;
                     int _strongReferences;
                     int _weakReferences;
-
             };
 
         }
     }
 }
+
+// Pull in implementations
+#include "ControlBlock-tpp.h"
 
 #endif   // LIBXAOS_CORE_POINTERS_INTERNAL_CONTROLBLOCK_H
