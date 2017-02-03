@@ -45,12 +45,12 @@ namespace libxaos {
                 StrongPointer<T>& operator=(StrongPointer<T>&&);
 
                 //! Arrow Operator Dereferencing
-                T* operator->() const;
+                inline T* operator->() const;
                 //! Asterisk Operator Dereferencing
-                T& operator*() const;
+                inline T& operator*() const;
 
                 //! Returns true if the internal pointer is not null
-                bool operator bool() const;
+                inline bool operator bool() const;
 
                 //! Converts this StrongPointer to a WeakPointer
                 WeakPointer<T> getWeakPointer();
@@ -94,7 +94,7 @@ namespace libxaos {
                 WeakPointer<T>& operator=(WeakPointer<T>&&);
 
                 //! Returns true if the internal pointer is not null
-                bool operator bool() const;
+                inline bool operator bool() const;
 
                 //! Converts this WeakPointer to a StrongPointer
                 StrongPointer<T> getStrongPointer();

@@ -33,8 +33,8 @@ namespace libxaos {
 
                 public:
 
-                    //! Constructs a ControlBlock from a T*
-                    ControlBlock(T*);
+                    //! Create a ControlBlock*
+                    static inline ControlBlock* create(T*);
                     ~ControlBlock();
 
                     //! Should not be copy constructed
@@ -45,21 +45,26 @@ namespace libxaos {
                     //! Should not be move constructed
                     ControlBlock(ControlBlock<T, P>&&) = delete;
                     //! Should not be move assigned.
-                    CotnrolBlock<T, P>& operator=(ControlBlock<T, P>&&)
+                    ControlBlock<T, P>& operator=(ControlBlock<T, P>&&)
                             = delete;
 
                     //! Returns the pointer
-                    T* getPointer() const;
+                    inline T* getPointer() const;
 
                     //! Increment reference
-                    void incrementReference(ReferenceType);
+                    inline void incrementReference(ReferenceType);
                     //! Decrement reference
-                    void decrementReference(ReferenceType);
+                    inline void decrementReference(ReferenceType);
 
                     //! Validates the internal pointer to be non-null
                     bool operator bool() const;
 
                 private:
+
+                    //! Constructs a ControlBlock from a T* .  This constructor
+                    //! is private since it shouldn't be stack allocated.
+                    ControlBlock(T*);
+
                     //! The held pointer
                     T* _pointer;
                     //! The number of strong shared pointers using this block.
