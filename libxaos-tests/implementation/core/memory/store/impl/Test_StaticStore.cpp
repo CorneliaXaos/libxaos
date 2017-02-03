@@ -53,12 +53,13 @@ TEST_CASE("CORE:MEMORY/STORE/IMPL/StaticStore | Stores hold data.",
     // Verify data is correct.
     uint8_t index = 0;
     for (int i = 0; i < 128 + 256 + 512; i++) {
+        INFO("Current iteration: " << i);
         if (i < 128) {
-            REQUIRE(*(storeA.getRawStorage() + index) == index);
+            REQUIRE(*(storeA.getRawStorage() + i) == index);
         } else if (i < 256) {
-            REQUIRE(*(storeB.getRawStorage() + index - 128) == index);
+            REQUIRE(*(storeB.getRawStorage() + i - 128) == index);
         } else {
-            REQUIRE(*(storeC.getRawStorage() + index - 128 - 256) == index);
+            REQUIRE(*(storeC.getRawStorage() + i - 128 - 256) == index);
         }
 
         index++;
