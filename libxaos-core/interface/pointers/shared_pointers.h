@@ -1,6 +1,7 @@
 #ifndef     LIBXAOS_CORE_POINTERS_SHARED_POINTERS_H
 #define     LIBXAOS_CORE_POINTERS_SHARED_POINTERS_H
 
+#include <cstddef>
 #include <type_traits>
 
 #include "pointers/__internal__/ControlBlock.h"
@@ -36,7 +37,9 @@ namespace libxaos {
                 //! Constructs a "null" StrongPointer
                 StrongPointer();
                 //! Constructs a StrongPointer from the provided pointer.
-                StrongPointer(T*);
+                explicit StrongPointer(T*);
+                //! Constructs a nullptr StrongPointer from type
+                StrongPointer(nullptr_t);
                 ~StrongPointer();
 
                 StrongPointer(const StrongPointer<T>&);
@@ -44,16 +47,19 @@ namespace libxaos {
                 StrongPointer(StrongPointer<T>&&);
                 StrongPointer<T>& operator=(StrongPointer<T>&&);
 
+                //! Allows assigning nullptr to a StrongPointer
+                StrongPointer<T>& operator=(nullptr_t);
+
                 //! Arrow Operator Dereferencing
                 inline T* operator->() const;
                 //! Asterisk Operator Dereferencing
                 inline T& operator*() const;
 
                 //! Returns true if the internal pointer is not null
-                inline bool operator bool() const;
+                inline operator bool() const;
 
                 //! Converts this StrongPointer to a WeakPointer
-                WeakPointer<T> getWeakPointer();
+                inline WeakPointer<T> getWeakPointer() const;
 
                 // INTERNAL CONSTRUCTORS
 
@@ -61,6 +67,19 @@ namespace libxaos {
                 //! If the ControlBlock is null or invalid, this StrongPointer
                 //! Points to a nullptr
                 StrongPointer(ControlBlock*);
+
+                //! Compare (Equality) to nullptr
+                inline bool operator==(nullptr_t);
+                //! Compare (Inequality) to nullptr
+                inline bool operator!=(nullptr_t);
+                //! Compare (Equality) to another StrongPointer
+                inline bool operator==(const StrongPointer<T>&);
+                //! Compare (Inequality) to another StrongPointer
+                inline bool operator!=(const StrongPointer<T>&);
+                //! Compare (Equality) to a WeakPointer
+                inline bool operator==(const WeakPointer<T>&);
+                //! Compare (Inequality) to a WeakPointer
+                inline bool operator!=(const WeakPointer<T>&);
 
             private:
                 //! The data block used to Control access to the pointer.
@@ -86,6 +105,8 @@ namespace libxaos {
             public:
                 //! Constructs a "null" WeakPointer
                 WeakPointer();
+                //! Constructs a nullptr WeakPointer from type
+                WeakPointer(nullptr_t);
                 ~WeakPointer();
 
                 WeakPointer(const WeakPointer<T>&);
@@ -93,11 +114,14 @@ namespace libxaos {
                 WeakPointer(WeakPointer<T>&&);
                 WeakPointer<T>& operator=(WeakPointer<T>&&);
 
+                //! Allows assigning nullptr to a WeakPointer
+                WeakPointer<T>& operator=(nullptr_t);
+
                 //! Returns true if the internal pointer is not null
-                inline bool operator bool() const;
+                inline operator bool() const;
 
                 //! Converts this WeakPointer to a StrongPointer
-                StrongPointer<T> getStrongPointer();
+                inline StrongPointer<T> getStrongPointer() const;
 
                 // INTERNAL CONSTRUCTORS
 
@@ -105,6 +129,19 @@ namespace libxaos {
                 //! If the ControlBlock is null or invalid, this WeakPointer
                 //! Points to a nullptr
                 WeakPointer(ControlBlock*);
+
+                //! Compare (Equality) to nullptr
+                inline bool operator==(nullptr_t);
+                //! Compare (Inequality) to nullptr
+                inline bool operator!=(nullptr_t);
+                //! Compare (Equality) to a StrongPointer
+                inline bool operator==(const StrongPointer<T>&);
+                //! Compare (Inequality) to a StrongPointer
+                inline bool operator!=(const StrongPointer<T>&);
+                //! Compare (Equality) to another WeakPointer
+                inline bool operator==(const WeakPointer<T>&);
+                //! Compare (Inequality) to another WeakPointer
+                inline bool operator!=(const WeakPointer<T>&);
 
             private:
                 //! The data block used to control access to the pointer.

@@ -111,6 +111,8 @@
 			<Add option="-lxaos-core" />
 		</Linker>
 		<Unit filename="implementation/core/memory/store/impl/Test_StaticStore.cpp" />
+		<Unit filename="implementation/core/pointers/Test_shared_pointers.cpp" />
+		<Unit filename="implementation/core/pointers/__internal__/Test_ControlBlock.cpp" />
 		<Unit filename="implementation/core/timing/Test_Clock.cpp" />
 		<Unit filename="implementation/core/timing/Test_Stopwatch.cpp" />
 		<Unit filename="implementation/game/Test_IEntity.cpp" />

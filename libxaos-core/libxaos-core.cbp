@@ -118,9 +118,9 @@
 		<Unit filename="interface/memory/store/impl/StaticStore-tpp.h" />
 		<Unit filename="interface/memory/store/impl/StaticStore.h" />
 		<Unit filename="interface/memory/utility/alignment.h" />
-		<Unit filename="interface/pointers/StrongPointer.h" />
-		<Unit filename="interface/pointers/WeakPointer.h" />
+		<Unit filename="interface/pointers/__internal__/ControlBlock-tpp.h" />
 		<Unit filename="interface/pointers/__internal__/ControlBlock.h" />
+		<Unit filename="interface/pointers/shared_pointers.h" />
 		<Unit filename="interface/timing/Clock-inl.h" />
 		<Unit filename="interface/timing/Clock.h" />
 		<Unit filename="interface/timing/Stopwatch-inl.h" />
