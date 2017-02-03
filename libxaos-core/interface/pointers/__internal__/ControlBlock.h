@@ -5,28 +5,48 @@ namespace libxaos {
     namespace pointers {
         namespace internal { // an extra namespace.. just to deter outside use
 
-            template<typename T>
+            //! An enum for differentiating between owners and observers
+            enum ReferenceType {
+                STRONG,
+                WEAK
+            };
+
+            //! An enum for differentiating between pointer types.
+            enum PointerType {
+                PLAIN,
+                ARRAY
+            };
+
+            /**
+             *  @brief A ControlBlock handles the lifetime of a shared pointer.
+             *
+             *  THIS CLASS IS INTERNAL ONLY.  YOU SHOULD NOT BE USING IT.
+             *
+             *  A ControlBlock manages the lifetime of a shared pointer based on
+             *  registered Strong and Weak references.  It deletes the held
+             *  pointer based on those referencing itself.  Additionally, it
+             *  manages its own lifetime and will destroy itself when there are
+             *  no longer any shared pointers utilizing it.
+             */
+            template<typename T, PointerType P>
             class ControlBlock {
 
                 public:
 
-                    enum ReferenceType {
-                        STRONG,
-                        WEAK
-                    };
-
-                    //! Constructs a ControlBlock from a T pointer
+                    //! Constructs a ControlBlock from a T*
                     ControlBlock(T*);
                     ~ControlBlock();
 
                     //! Should not be copy constructed
-                    ControlBlock(const ControlBlock<T>&) = delete;
+                    ControlBlock(const ControlBlock<T, P>&) = delete;
                     //! Should not be copy assigned
-                    ControlBlock<T>& operator=(const ControlBlock<T>&) = delete;
+                    ControlBlock<T, P>& operator=(const ControlBlock<T, P>&)
+                            = delete;
                     //! Should not be move constructed
-                    ControlBlock(ControlBlock<T>&&) = delete;
+                    ControlBlock(ControlBlock<T, P>&&) = delete;
                     //! Should not be move assigned.
-                    CotnrolBlock<T>& operator=(ControlBlock<T>&&) = delete;
+                    CotnrolBlock<T, P>& operator=(ControlBlock<T, P>&&)
+                            = delete;
 
                     //! Returns the pointer
                     T* getPointer() const;
@@ -36,9 +56,15 @@ namespace libxaos {
                     //! Decrement reference
                     void decrementReference(ReferenceType);
 
+                    //! Validates the internal pointer to be non-null
+                    bool operator bool() const;
+
                 private:
+                    //! The held pointer
                     T* _pointer;
+                    //! The number of strong shared pointers using this block.
                     int _strongReferences;
+                    //! The number of weak shared pointers using this block.
                     int _weakReferences;
             };
 
