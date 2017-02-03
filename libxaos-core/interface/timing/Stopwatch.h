@@ -9,6 +9,19 @@
 namespace libxaos {
     namespace timing {
 
+        /**
+         *  @brief A Stopwatch monitors how much time passses between ticks.
+         *
+         *  A Stopwatch monitors how much time it takes between consecutive
+         *  "ticks".  Note that there is an implicit "tick" when the Stopwatch
+         *  is created or restarted.  This "tick" does not store a duration, but
+         *  merely serves as the starting value for calculating a duration.
+         *
+         *  The behavior of this class is modeled after a Stopwatch used by
+         *  runners circling a track and measuring their "time between ticks".
+         *  As such, it is very convenient to use for measuring the length of
+         *  time something repetitive takes.. such as frames in a video game. :)
+         */
         class Stopwatch {
 
             public:

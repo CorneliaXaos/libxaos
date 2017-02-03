@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_layout_file>
 	<FileVersion major="1" minor="0" />
-	<ActiveProject path="libxaos-tests/libxaos-tests.cbp" />
-	<PreferredTarget name="Debug_x86" />
+	<ActiveProject path="libxaos-core/libxaos-core.cbp" />
+	<PreferredTarget name="ALL" />
 </CodeBlocks_workspace_layout_file>
