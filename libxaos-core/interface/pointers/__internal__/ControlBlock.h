@@ -34,7 +34,7 @@ namespace libxaos {
                 public:
 
                     //! Create a ControlBlock*
-                    static inline ControlBlock* create(T*);
+                    static inline ControlBlock<T, P>* create(T*);
                     ~ControlBlock();
 
                     //! Should not be copy constructed
@@ -57,13 +57,15 @@ namespace libxaos {
                     inline void decrementReference(ReferenceType);
 
                     //! Validates the internal pointer to be non-null
-                    bool operator bool() const;
+                    inline operator bool() const;
 
                 private:
 
                     //! Constructs a ControlBlock from a T* .  This constructor
                     //! is private since it shouldn't be stack allocated.
                     ControlBlock(T*);
+                    //! Deletes the internal pointer
+                    inline void deletePointer();
 
                     //! The held pointer
                     T* _pointer;

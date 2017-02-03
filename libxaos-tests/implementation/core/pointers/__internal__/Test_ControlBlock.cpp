@@ -30,8 +30,6 @@ TEST_CASE("CORE:POINTERS/INTERNAL/ControlBlock | Can Create ControlBlocks",
     REQUIRE(blockB->getPointer() == intArrayPointer);
 
     // Cleanup
-    delete intPointer;
-    delete[] intArrayPointer;
     delete blockA;
     delete blockB;
 }
@@ -56,7 +54,7 @@ TEST_CASE("CORE:POINTERS/INTERNAL/ControlBlock | ControlBlocks delete Pointers",
 
     // Remove strong references
     blockA->decrementReference(ReferenceType::STRONG);
-    blockB->decrementReference(ReferenceType::WEAK);
+    blockB->decrementReference(ReferenceType::STRONG);
 
     // Verify
     REQUIRE(blockA->getPointer() == nullptr);
@@ -86,16 +84,16 @@ TEST_CASE("CORE:POINTERS/INTERNAL/ControlBlock | ControlBlocks reflect "
     blockB->incrementReference(ReferenceType::WEAK);
 
     // Verify bool operators
-    REQUIRE(blockA);
-    REQUIRE(blockB);
+    REQUIRE(*blockA);
+    REQUIRE(*blockB);
 
     // Remove strong references
     blockA->decrementReference(ReferenceType::STRONG);
-    blockB->decrementReference(ReferenceType::WEAK);
+    blockB->decrementReference(ReferenceType::STRONG);
 
     // Verify again
-    REQUIRE(!blockA);
-    REQUIRE(!blockB);
+    REQUIRE(!*blockA);
+    REQUIRE(!*blockB);
 
     // This should cleanup nicely:
     blockA->decrementReference(ReferenceType::WEAK);
