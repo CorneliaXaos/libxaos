@@ -61,13 +61,6 @@ namespace libxaos {
                 //! Converts this StrongPointer to a WeakPointer
                 inline WeakPointer<T> getWeakPointer() const;
 
-                // INTERNAL CONSTRUCTORS
-
-                //! Constructs a StrongPointer from a provided ControlBlock
-                //! If the ControlBlock is null or invalid, this StrongPointer
-                //! Points to a nullptr
-                StrongPointer(ControlBlock*);
-
                 //! Compare (Equality) to nullptr
                 inline bool operator==(nullptr_t);
                 //! Compare (Inequality) to nullptr
@@ -81,9 +74,16 @@ namespace libxaos {
                 //! Compare (Inequality) to a WeakPointer
                 inline bool operator!=(const WeakPointer<T>&);
 
+                // INTERNAL CONSTRUCTORS
+
+                //! Constructs a StrongPointer from a provided ControlBlock
+                //! If the ControlBlock is null or invalid, this StrongPointer
+                //! Points to a nullptr
+                StrongPointer(ControlBlock<T, PointerType::PLAIN>*);
+
             private:
                 //! The data block used to Control access to the pointer.
-                ControlBlock* _block;
+                ControlBlock<T, PointerType::PLAIN>* _block;
         };
 
         /**
@@ -123,13 +123,6 @@ namespace libxaos {
                 //! Converts this WeakPointer to a StrongPointer
                 inline StrongPointer<T> getStrongPointer() const;
 
-                // INTERNAL CONSTRUCTORS
-
-                //! Constructs a WeakPointer from a provided ControlBlock
-                //! If the ControlBlock is null or invalid, this WeakPointer
-                //! Points to a nullptr
-                WeakPointer(ControlBlock*);
-
                 //! Compare (Equality) to nullptr
                 inline bool operator==(nullptr_t);
                 //! Compare (Inequality) to nullptr
@@ -143,9 +136,16 @@ namespace libxaos {
                 //! Compare (Inequality) to another WeakPointer
                 inline bool operator!=(const WeakPointer<T>&);
 
+                // INTERNAL CONSTRUCTORS
+
+                //! Constructs a WeakPointer from a provided ControlBlock
+                //! If the ControlBlock is null or invalid, this WeakPointer
+                //! Points to a nullptr
+                WeakPointer(ControlBlock<T, PointerType::PLAIN>*);
+
             private:
                 //! The data block used to control access to the pointer.
-                ControlBlock* _block;
+                ControlBlock<T, PointerType::PLAIN>* _block;
         };
     }
 }

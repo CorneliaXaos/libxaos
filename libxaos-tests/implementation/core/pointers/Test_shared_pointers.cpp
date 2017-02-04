@@ -14,6 +14,7 @@
 
 // Define some types
 using StrongPointer = libxaos::pointers::StrongPointer<int>;
+using StrongVecPointer = libxaos::pointers::StrongPointer<std::vector<int>>;
 using WeakPointer = libxaos::pointers::WeakPointer<int>;
 
 TEST_CASE("CORE:POINTERS/shared_pointers | Can Create Shared Pointers",
@@ -37,15 +38,15 @@ TEST_CASE("CORE:POINTERS/shared_pointers | Can Create Shared Pointers",
 TEST_CASE("CORE:POINTERS/shared_pointers | Can access Shared Pointers",
         "[core]") {
     StrongPointer strong1 {new int};
-    WeakPointer weak = strong.getWeakPointer();
+    WeakPointer weak = strong1.getWeakPointer();
 
-    *strong = 50;
+    *strong1 = 50;
     StrongPointer strong2 = weak.getStrongPointer();
     REQUIRE(*strong2 == 50);
 
-    strong2 = StrongPointer{new std::vector<int>()};
-    strong2->resize(10);
-    REQUIRE(strong2->size() == 10);
+    StrongVecPointer strong3 {new std::vector<int>()};
+    strong3->resize(10);
+    REQUIRE(strong3->size() == 10);
 }
 
 TEST_CASE("CORE:POINTERS/shared_pointers | Null Shared Pointers behave"
@@ -54,7 +55,7 @@ TEST_CASE("CORE:POINTERS/shared_pointers | Null Shared Pointers behave"
     WeakPointer weak1 = nullptr;
 
     StrongPointer strong2 = weak1.getStrongPointer();
-    WeakPointer weak2 = strong1.getStrongPointer();
+    WeakPointer weak2 = strong1.getWeakPointer();
 
     REQUIRE(!strong1);
     REQUIRE(!strong2);

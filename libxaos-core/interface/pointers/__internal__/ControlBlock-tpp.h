@@ -30,7 +30,7 @@ namespace libxaos {
             }
 
             template<typename T, PointerType P>
-            inline void ControlBlock<T, P>::incrementReference(
+            void ControlBlock<T, P>::incrementReference(
                     ReferenceType type) {
                 if (type == ReferenceType::STRONG) {
                     _strongReferences++;
@@ -39,7 +39,7 @@ namespace libxaos {
                 }
             }
             template<typename T, PointerType P>
-            inline void ControlBlock<T, P>::decrementReference(
+            void ControlBlock<T, P>::decrementReference(
                     ReferenceType type) {
                 if (type == ReferenceType::STRONG) {
                     _strongReferences--;

@@ -52,9 +52,9 @@ namespace libxaos {
                     inline T* getPointer() const;
 
                     //! Increment reference
-                    inline void incrementReference(ReferenceType);
+                    void incrementReference(ReferenceType);
                     //! Decrement reference
-                    inline void decrementReference(ReferenceType);
+                    void decrementReference(ReferenceType);
 
                     //! Validates the internal pointer to be non-null
                     inline operator bool() const;
