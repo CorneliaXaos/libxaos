@@ -106,6 +106,7 @@
 			<Add option="-Wall" />
 			<Add option="-std=c++11" />
 			<Add directory="../libxaos-maths/interface" />
+			<Add directory="../libxaos-core/interface" />
 		</Compiler>
 		<Unit filename="interface/IEntity-tpp.h" />
 		<Unit filename="interface/IEntity.h" />

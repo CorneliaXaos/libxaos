@@ -3,12 +3,20 @@
 
 #include <type_traits>
 
+#include "pointers/shared_pointers.h"
+
 namespace libxaos {
     namespace game {
 
         // Forward declare our pointer type
         template<typename T, int N>
         class IEntity;
+
+        namespace {
+            template<typename T, int N>
+            using WeakEntityPointer =
+                    libxaos::pointers::WeakPointer<IEntity<T, N>>;
+        }
 
         /**
          *  @brief This class is used to control an IEntity instance.
@@ -29,7 +37,7 @@ namespace libxaos {
             public:
                 IEntityController();
                 //! Construct this controller and attach the provided entity.
-                IEntityController(IEntity<T, N>*);
+                IEntityController(WeakEntityPointer<T, N>);
                 virtual ~IEntityController();
 
                 IEntityController(const IEntityController<T, N>&);
@@ -39,16 +47,16 @@ namespace libxaos {
                 IEntityController<T, N>& operator=(IEntityController<T, N>&&);
 
                 //! Sets (attaches) an Entity to this controller.
-                inline void setEntity(IEntity<T, N>*);
+                inline void setEntity(WeakEntityPointer<T, N>);
                 //! Gets the attached entity.
-                inline IEntity<T, N>* getEntity() const;
+                inline WeakEntityPointer<T, N> getEntity() const;
 
                 //! Updates the attached entity.
                 virtual void update() const = 0;
 
             private:
-                //! A pointer to the attached entity.
-                IEntity<T, N>* _entity;
+                //! A shared pointer to the attached entity.
+                WeakEntityPointer<T, N> _entity;
         };
 
     }

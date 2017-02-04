@@ -11,8 +11,8 @@
         IEntityController<T, N>::IEntityController() :
                 IEntityController<T, N>(nullptr) {}
         template<typename T, int N>
-        IEntityController<T, N>::IEntityController(IEntity<T, N>* entPtr) :
-                _entity(entPtr) {}
+        IEntityController<T, N>::IEntityController(
+                WeakEntityPointer<T, N> entPtr) : _entity(entPtr) {}
         template<typename T, int N>
         IEntityController<T, N>::~IEntityController() {} // Nothing to do
 
@@ -46,11 +46,12 @@
 
         // Entity Accessors
         template<typename T, int N>
-        void IEntityController<T, N>::setEntity(IEntity<T, N>* entPtr) {
+        void IEntityController<T, N>::setEntity(
+                WeakEntityPointer<T, N> entPtr) {
             _entity = entPtr;
         }
         template<typename T, int N>
-        IEntity<T, N>* IEntityController<T, N>::getEntity() const {
+        WeakEntityPointer<T, N> IEntityController<T, N>::getEntity() const {
             return _entity;
         }
     }
