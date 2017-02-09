@@ -25,7 +25,16 @@ namespace libxaos {
             static_assert(N > 0, "A Store must have non-zero storage size!");
 
             public:
+                IStore() {} //! No-Action Constructor
                 virtual ~IStore() {} //!< Virtual No-Action Destructor
+
+                //! No copying IStores.  They point at UNIQUE memory.
+                IStore(const IStore<N, A>&) = delete;
+                IStore<N, A>& operator=(const IStore<N, A>&) = delete;
+
+                //! Potentially allow movement.
+                IStore(IStore<N, A>&&) = default;
+                IStore<N, A>& operator=(IStore<N, A>&&) = default;
 
                 /**
                  *  @brief Returns a "byte" pointer to the beginning of the data
