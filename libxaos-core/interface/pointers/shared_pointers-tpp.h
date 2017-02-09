@@ -111,31 +111,31 @@ namespace libxaos {
 
         // Comparison Operators
         template<typename T>
-        inline bool StrongPointer<T>::operator==(nullptr_t) {
+        inline bool StrongPointer<T>::operator==(nullptr_t) const {
             return _block == nullptr;
         }
         template<typename T>
-        inline bool StrongPointer<T>::operator!=(nullptr_t) {
+        inline bool StrongPointer<T>::operator!=(nullptr_t) const {
             return _block != nullptr;
         }
         template<typename T>
         inline bool StrongPointer<T>::operator==(
-                const StrongPointer<T>& other) {
+                const StrongPointer<T>& other) const {
             return _block == other._block;
         }
         template<typename T>
         inline bool StrongPointer<T>::operator!=(
-                const StrongPointer<T>& other) {
+                const StrongPointer<T>& other) const {
             return _block != other._block;
         }
         template<typename T>
         inline bool StrongPointer<T>::operator==(
-                const WeakPointer<T>& other) {
+                const WeakPointer<T>& other) const {
             return _block == other.getStrongPointer()._block;
         }
         template<typename T>
         inline bool StrongPointer<T>::operator!=(
-                const WeakPointer<T>& other) {
+                const WeakPointer<T>& other) const {
             return _block != other.getStrongPointer()._block;
         }
 
@@ -225,31 +225,31 @@ namespace libxaos {
 
         // Comparison Operators
         template<typename T>
-        inline bool WeakPointer<T>::operator==(nullptr_t) {
+        inline bool WeakPointer<T>::operator==(nullptr_t) const {
             return _block == nullptr;
         }
         template<typename T>
-        inline bool WeakPointer<T>::operator!=(nullptr_t) {
+        inline bool WeakPointer<T>::operator!=(nullptr_t) const {
             return _block != nullptr;
         }
         template<typename T>
         inline bool WeakPointer<T>::operator==(
-                const StrongPointer<T>& other) {
+                const StrongPointer<T>& other) const {
             return _block == other.getWeakPointer()._block;
         }
         template<typename T>
         inline bool WeakPointer<T>::operator!=(
-                const StrongPointer<T>& other) {
+                const StrongPointer<T>& other) const {
             return _block != other.getWeakPointer()._block;
         }
         template<typename T>
         inline bool WeakPointer<T>::operator==(
-                const WeakPointer<T>& other) {
+                const WeakPointer<T>& other) const {
             return _block == other._block;
         }
         template<typename T>
         inline bool WeakPointer<T>::operator!=(
-                const WeakPointer<T>& other) {
+                const WeakPointer<T>& other) const {
             return _block != other._block;
         }
 

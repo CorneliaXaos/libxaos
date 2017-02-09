@@ -62,17 +62,17 @@ namespace libxaos {
                 inline WeakPointer<T> getWeakPointer() const;
 
                 //! Compare (Equality) to nullptr
-                inline bool operator==(nullptr_t);
+                inline bool operator==(nullptr_t) const;
                 //! Compare (Inequality) to nullptr
-                inline bool operator!=(nullptr_t);
+                inline bool operator!=(nullptr_t) const;
                 //! Compare (Equality) to another StrongPointer
-                inline bool operator==(const StrongPointer<T>&);
+                inline bool operator==(const StrongPointer<T>&) const;
                 //! Compare (Inequality) to another StrongPointer
-                inline bool operator!=(const StrongPointer<T>&);
+                inline bool operator!=(const StrongPointer<T>&) const;
                 //! Compare (Equality) to a WeakPointer
-                inline bool operator==(const WeakPointer<T>&);
+                inline bool operator==(const WeakPointer<T>&) const;
                 //! Compare (Inequality) to a WeakPointer
-                inline bool operator!=(const WeakPointer<T>&);
+                inline bool operator!=(const WeakPointer<T>&) const;
 
                 // INTERNAL CONSTRUCTORS
 
@@ -124,17 +124,17 @@ namespace libxaos {
                 inline StrongPointer<T> getStrongPointer() const;
 
                 //! Compare (Equality) to nullptr
-                inline bool operator==(nullptr_t);
+                inline bool operator==(nullptr_t) const;
                 //! Compare (Inequality) to nullptr
-                inline bool operator!=(nullptr_t);
+                inline bool operator!=(nullptr_t) const;
                 //! Compare (Equality) to a StrongPointer
-                inline bool operator==(const StrongPointer<T>&);
+                inline bool operator==(const StrongPointer<T>&) const;
                 //! Compare (Inequality) to a StrongPointer
-                inline bool operator!=(const StrongPointer<T>&);
+                inline bool operator!=(const StrongPointer<T>&) const;
                 //! Compare (Equality) to another WeakPointer
-                inline bool operator==(const WeakPointer<T>&);
+                inline bool operator==(const WeakPointer<T>&) const;
                 //! Compare (Inequality) to another WeakPointer
-                inline bool operator!=(const WeakPointer<T>&);
+                inline bool operator!=(const WeakPointer<T>&) const;
 
                 // INTERNAL CONSTRUCTORS
 
