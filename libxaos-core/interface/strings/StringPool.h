@@ -2,14 +2,10 @@
 #define     LIBXAOS_CORE_STRINGS_STRING_POOL_H
 
 #include "memory/store/IStore.h"
-#include "pointers/IndirectArrayPointer.h"
+#include "strings/PooledString.h"
 
 namespace libxaos {
     namespace strings {
-
-        //! A simple wrapper for the internal string in a StringPool
-        using PooledString =
-                libxaos::pointers::IndirectArrayPointer<const char*>;
 
         /**
          *  @brief This class represents a pool of strings.
@@ -21,7 +17,7 @@ namespace libxaos {
          *
          *  This class is NOT provided globally by default, though it is
          *  possible that there may be a global StringPool in the engine at
-         *  some point.  In other words, one should not rely on their existing
+         *  some point.  In other words, one should not rely on there existing
          *  a StringPool for use until one can confirm that some system provides
          *  such a pool.
          */
@@ -40,8 +36,8 @@ namespace libxaos {
                 StringPool(StringPool&&);
                 StringPool& operator=(StringPool&&);
 
-                //! Add a String to the Pool
-                PooledString add(const char*);
+                //! Add / Get a String to the Pool
+                PooledString process(const char*);
                 //! Query if a String is present (const char*)
                 inline bool contains(const char*) const;
                 //! Query if a String is present (PooledString)

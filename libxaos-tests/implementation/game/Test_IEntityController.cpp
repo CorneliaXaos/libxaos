@@ -6,7 +6,7 @@
  *  controllers.
  */
 
- #include <string>
+#include <string>
 
 #include "IEntity.h"
 #include "IEntityController.h"

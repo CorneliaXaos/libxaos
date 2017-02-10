@@ -35,15 +35,19 @@ namespace libxaos {
                 PooledString& operator=(nullptr_t);
 
                 //! Determines if this PooledString points to a valid string.
-                operator bool() const;
+                inline operator bool() const;
 
                 //! Acquires the contents of this PooledString
-                const char* getCharPointer() const;
+                inline const char* getCharPointer() const;
 
                 //! Compares two PooledStrings (Equality)
-                bool operator==(const PooledString&);
+                inline bool operator==(const PooledString&) const;
                 //! Compares two PooledStrings (Inequality)
-                bool operator!=(const PooledString&);
+                inline bool operator!=(const PooledString&) const;
+                //! Compares to nullptr (Equality)
+                inline bool operator==(nullptr_t) const;
+                //! Compares to nullptr (Inequality)
+                inline bool operator!=(nullptr_t) const;
 
             private:
                 //! Private constructor for use by the StringPool
