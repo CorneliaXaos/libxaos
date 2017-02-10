@@ -2,6 +2,7 @@
 #define     LIBXAOS_CORE_STRINGS_HASHED_STRING_H
 
 #include <cstdint>
+#include <string>
 
 #include "strings/StringPool.h"
 
@@ -35,6 +36,10 @@ namespace libxaos {
                 HashType _hash;
         };
 
+        //! Equality operator of two HashedStrings
+        inline bool operator==(const HashedString&, const HashedString&);
+        //! Inequality operator of two HashedStrings
+        inline bool operator!=(const HashedString&, const HashedString&);
     }
 }
 

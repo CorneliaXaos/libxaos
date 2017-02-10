@@ -1,3 +1,5 @@
+// WARNING - NOT IMPLEMENTED YET (AND WON'T BE FOR SOME TIME)
+
 #ifndef     LIBXAOS_CORE_POINTERS_INDIRECT_POINTER_H
 #define     LIBXAOS_CORE_POINTERS_INDIRECT_POINTER_H
 
@@ -18,7 +20,7 @@ namespace libxaos {
          *  implementations of this class may allow the attachment of a callback
          *  which can be used to verify if the held pointer is still valid.)
          *
-         *  This IndirectPointer only supports rray types!  Please see
+         *  This IndirectPointer only supports array types!  Please see
          *  IndirectPointer for a plain variant!
          *
          *  @tparam T the type of pointer to hold.
