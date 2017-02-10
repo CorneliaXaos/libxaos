@@ -23,7 +23,9 @@ using PooledString = libxaos::strings::PooledString;
 using StringPool = libxaos::strings::StringPool;
 
 TEST_CASE("CORE:STRINGS/HashedString | Can Construct HashedStrings", "[core]") {
-    StringPool pool {Store{}};
+    Store* store = new Store();
+
+    StringPool pool {store}; // acquires ownership
     PooledString pooledString = pool.process("STRING");
     std::string stdString {"STRING"};
 
@@ -37,7 +39,9 @@ TEST_CASE("CORE:STRINGS/HashedString | Can Construct HashedStrings", "[core]") {
 }
 
 TEST_CASE("CORE:STRINGS/HashedString | Can Compare HashedStrings", "[core]") {
-    StringPool pool {Store{}};
+    Store* store = new Store();
+
+    StringPool pool {store}; // acquires ownership
     PooledString stringA = pool.process("TEST");
     PooledString stringB = nullptr;
     const char* stringC = "TEST";
@@ -57,4 +61,6 @@ TEST_CASE("CORE:STRINGS/HashedString | Can Compare HashedStrings", "[core]") {
     REQUIRE(hashC != hashE);
     REQUIRE(hashB == HashedString::NULL_STRING);
     REQUIRE(hashF == HashedString::EMPTY_STRING);
+    REQUIRE(hashB == HashedString::NULL_STRING_HASH);
+    REQUIRE(HashedString::NULL_STRING_HASH != hashA);
 }

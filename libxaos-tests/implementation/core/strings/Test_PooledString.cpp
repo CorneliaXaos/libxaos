@@ -21,14 +21,17 @@ using StringPool = libxaos::strings::StringPool;
 using PooledString = libxaos::strings::PooledString;
 
 TEST_CASE("CORE:STRINGS/StringPool | Can Create StringPools", "[core]") {
-    volatile StringPool pool {Store{}};
+    Store* store = new Store();
+    volatile StringPool pool {store}; // acquires ownership
 
     // If this compiles and runs.. good for us! :D
 }
 
 TEST_CASE("CORE:STRINGS/StringPool | Can Add Strings to Pool", "[core]") {
-    StringPool pool {Store{}};
-    PooledString nullString = pool.process(nullptr);
+    Store* store = new Store();
+
+    StringPool pool {store}; // acquires ownership
+    PooledString nullString = nullptr;
     PooledString pooledString = pool.process("I am now pooled.");
 
     REQUIRE(!pool.contains(nullString)); // Shouldn't exist
@@ -37,7 +40,9 @@ TEST_CASE("CORE:STRINGS/StringPool | Can Add Strings to Pool", "[core]") {
 }
 
 TEST_CASE("CORE:STRINGS/PooledString | Can Create Null Strings", "[core]") {
-    StringPool pool {Store{}};
+    Store* store = new Store();
+
+    StringPool pool {store}; // acquires ownership
     PooledString pooledString = pool.process("Waste.");
 
     PooledString nullString {nullptr};
@@ -50,7 +55,9 @@ TEST_CASE("CORE:STRINGS/PooledString | Can Create Null Strings", "[core]") {
 }
 
 TEST_CASE("CORE:STRINGS/PooledString | Can Test for Valid Strings", "[core]") {
-    StringPool pool {Store{}};
+    Store* store = new Store();
+
+    StringPool pool {store}; // acquires ownership
     PooledString stringA = pool.process("I'm valid!");
     PooledString stringB = nullptr; // I'm not! :C
 
@@ -60,7 +67,9 @@ TEST_CASE("CORE:STRINGS/PooledString | Can Test for Valid Strings", "[core]") {
 
 TEST_CASE("CORE:STRINGS/PooledString | A PooledString contains the proper"
         " string.", "[core]") {
-    StringPool pool {Store{}};
+    Store* store = new Store();
+
+    StringPool pool {store}; // acquires ownership
     const char* compare = "I NEED TO BE TESTED!";
     PooledString pooledString = pool.process(compare);
 
@@ -68,16 +77,16 @@ TEST_CASE("CORE:STRINGS/PooledString | A PooledString contains the proper"
 }
 
 TEST_CASE("CORE:STRINGS/PooledString | Can Compare PooledStrings", "[core]") {
-    StringPool pool {Store{}};
+    Store* store = new Store();
+
+    StringPool pool {store}; // acquires ownership
     PooledString stringA = pool.process("COMPARE ME!");
     PooledString stringB = pool.process("COMPARE ME!");
     PooledString stringC = pool.process("COMPARE ME TOO!");
-    PooledString stringD = pool.process(nullptr);
-    PooledString stringE = nullptr;
+    PooledString stringD = nullptr;
 
     REQUIRE(stringA != nullptr);
     REQUIRE(stringA == stringB);
     REQUIRE(stringB != stringC);
     REQUIRE(stringD == nullptr);
-    REQUIRE(stringD == stringE);
 }

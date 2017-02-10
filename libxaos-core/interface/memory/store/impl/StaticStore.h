@@ -26,11 +26,11 @@ namespace libxaos {
          *  @tparam ID the integer uniquely identifying this static allocation.
          */
         template<size_t N, short A, int ID> //! @todo reserve negative IDs
-        class StaticStore : public IStore<N, A> {
+        class StaticStore : public IStore {
 
             public:
-                StaticStore() {}
-                ~StaticStore() {}
+                StaticStore();
+                ~StaticStore();
 
                 //! @todo Copy and Move for the stores? Am not sure...
 

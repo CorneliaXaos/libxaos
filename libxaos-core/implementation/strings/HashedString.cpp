@@ -19,8 +19,10 @@ namespace libxaos {
         // but I don't want these values in teh public header because I don't
         // wan't people to feel it's okay to assign them manually.. use the
         // constants in the class!
-        HashedString::NULL_STRING {UINT32_MAX};
-        HashedString::EMPTY_STRING {0};
+        const HashType HashedString::NULL_STRING_HASH {UINT32_MAX};
+        const HashType HashedString::EMPTY_STRING_HASH {0};
+        const HashedString HashedString::NULL_STRING {nullptr};
+        const HashedString HashedString::EMPTY_STRING {""};
 
         // Our hashing algorithm.  Only visible here.
         // Algorithm is 'djb2'; Source: http://www.cse.yorku.ca/~oz/hash.html
@@ -28,25 +30,26 @@ namespace libxaos {
         // Manually assign to specific values for nullptr and empty string
         // Shift end values slightly if hash overlaps with manually assigned
         // values for NULL_STRING and EMPTY_STRING
-        HashedString::HashType hashString(const char* str) {
+        static HashType hashString(const char* str) {
             if (str == nullptr)
-                return HashedString::NULL_STRING;
+                return HashedString::NULL_STRING_HASH;
             else if (strlen(str) == 0)
-                return HashedString::EMPTY_STRING;
+                return HashedString::EMPTY_STRING_HASH;
 
             const unsigned char* hashPtr =
                     reinterpret_cast<const unsigned char*>(str);
 
-            HashedString::HashType hash = 5381;
+            HashType hash = 5381;
 
             int c;
-            while (c = *str++)
+            while ((c = *(hashPtr++))) {
                 hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+            }
 
             // Shift our hash slightly if needed
-            if (hash == HashedString::NULL_STRING)
+            if (hash == HashedString::NULL_STRING_HASH)
                 hash--;
-            else if (hash == HashedString::EMPTY_STRING)
+            else if (hash == HashedString::EMPTY_STRING_HASH)
                 hash++;
 
             return hash;
@@ -54,10 +57,11 @@ namespace libxaos {
 
         // Constructors
         HashedString::HashedString(const char* str) : _hash(hashString(str)) {}
-        HashedString::HashedString(std::string str) : HashedString(str.c_str) {}
+        HashedString::HashedString(const std::string& str) :
+                HashedString(str.data()) {}
         HashedString::HashedString(const PooledString& str) :
                 HashedString(str.getCharPointer()) {}
-        HashedString::~HashedString() {};
+        HashedString::~HashedString() {}
 
         // Copy / Move Semantics
         HashedString::HashedString(const HashedString& other) :

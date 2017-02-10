@@ -33,7 +33,7 @@ namespace libxaos {
                 //! Construct a HashedString from a character literal
                 explicit HashedString(const char*);
                 //! Construct a HashedString from a std::string (convenience)
-                explicit HashedString(std::string&);
+                explicit HashedString(const std::string&);
                 //! Cosntruct a HashedString from a PooledString
                 explicit HashedString(const PooledString&);
                 ~HashedString();
@@ -46,12 +46,18 @@ namespace libxaos {
                 //! Returns the hash of the string used in construction.
                 inline HashType getHash() const { return _hash; }
 
+                //! Unique hash for nullptr strings
+                static const HashType NULL_STRING_HASH;
+                //! Unique hash for empty strings
+                static const HashType EMPTY_STRING_HASH;
+
                 //! Uniquely identifies all nullptr strings
-                static const HashType NULL_STRING;
+                static const HashedString NULL_STRING;
                 //! Uniquely identifies all empty strings
-                static const HashType EMPTY_STRING;
+                static const HashedString EMPTY_STRING;
 
             private:
+                //! This string's HashType / Value
                 HashType _hash;
         };
 
@@ -59,7 +65,18 @@ namespace libxaos {
         inline bool operator==(const HashedString&, const HashedString&);
         //! Inequality operator of two HashedStrings
         inline bool operator!=(const HashedString&, const HashedString&);
+        //! Equality operator of HashedString and HashType
+        inline bool operator==(const HashedString&, HashType);
+        //! Equality operator of HashType and HashedString
+        inline bool operator==(HashType, const HashedString&);
+        //! Inequality operator of HashedString and HashType
+        inline bool operator!=(const HashedString&, HashType);
+        //! Inequality operator of HashType and HashedString
+        inline bool operator!=(HashType, const HashedString&);
     }
 }
+
+// Bring in inline implementations
+#include "HashedString-inl.h"
 
 #endif   // LIBXAOS_CORE_STRINGS_HASHED_STRING_H

@@ -33,6 +33,7 @@ namespace libxaos {
         // nullptr Assignment
         PooledString& PooledString::operator=(nullptr_t) {
             _string = nullptr;
+            return *this;
         }
 
         // Private Constructor

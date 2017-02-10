@@ -107,6 +107,9 @@
 			<Add option="-std=c++11" />
 			<Add directory="interface" />
 		</Compiler>
+		<Unit filename="implementation/strings/HashedString.cpp" />
+		<Unit filename="implementation/strings/PooledString.cpp" />
+		<Unit filename="implementation/strings/StringPool.cpp" />
 		<Unit filename="implementation/timing/Stopwatch.cpp" />
 		<Unit filename="interface/memory/allocator/Allocator.h" />
 		<Unit filename="interface/memory/allocator/impl/BlockAllocator.h" />
@@ -124,7 +127,10 @@
 		<Unit filename="interface/pointers/__internal__/ControlBlock.h" />
 		<Unit filename="interface/pointers/shared_pointers-tpp.h" />
 		<Unit filename="interface/pointers/shared_pointers.h" />
+		<Unit filename="interface/strings/HashedString-inl.h" />
 		<Unit filename="interface/strings/HashedString.h" />
+		<Unit filename="interface/strings/PooledString-inl.h" />
+		<Unit filename="interface/strings/PooledString.h" />
 		<Unit filename="interface/strings/StringPool.h" />
 		<Unit filename="interface/timing/Clock-inl.h" />
 		<Unit filename="interface/timing/Clock.h" />

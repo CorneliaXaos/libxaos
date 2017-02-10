@@ -16,25 +16,22 @@ namespace libxaos {
          *  a store or not but, generally, this is not a good idea.
          *
          *  To ensure ease of use, a Store should be default constructable.
-         *
-         *  @tparam N the size_t of bytes this Store contains.
-         *  @tparam A the short at which the data should be internally aligned.
          */
-        template<size_t N, short A>
         class IStore {
-            static_assert(N > 0, "A Store must have non-zero storage size!");
 
             public:
-                IStore() {} //! No-Action Constructor
+                //! Initializes the IStore to have particular size and alignment
+                IStore(size_t size, unsigned short alignment) :
+                        SIZE(size), ALIGNMENT(alignment) {}
                 virtual ~IStore() {} //!< Virtual No-Action Destructor
 
                 //! No copying IStores.  They point at UNIQUE memory.
-                IStore(const IStore<N, A>&) = delete;
-                IStore<N, A>& operator=(const IStore<N, A>&) = delete;
+                IStore(const IStore&) = delete;
+                IStore& operator=(const IStore&) = delete;
 
-                //! Potentially allow movement.
-                IStore(IStore<N, A>&&) = default;
-                IStore<N, A>& operator=(IStore<N, A>&&) = default;
+                //! No moving stores.. use a UniquePointer or something..
+                IStore(IStore&&) = delete;
+                IStore& operator=(IStore&&) = delete;
 
                 /**
                  *  @brief Returns a "byte" pointer to the beginning of the data
@@ -44,12 +41,12 @@ namespace libxaos {
                  *  in memory that the using class shall utilize for storing
                  *  information.
                  */
-                virtual inline uint8_t* getRawStorage() = 0;
+                virtual uint8_t* getRawStorage() = 0;
 
                 //! The size_t, in bytes, which this store contains.
-                static constexpr const size_t SIZE = N;
+                const size_t SIZE;
                 //! The short at which the data should be aligned.
-                static constexpr const short ALIGNMENT = A;
+                const unsigned short ALIGNMENT;
         };
 
     }

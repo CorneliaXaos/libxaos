@@ -1,13 +1,22 @@
 #ifndef     LIBXAOS_CORE_STRINGS_STRING_POOL_H
 #define     LIBXAOS_CORE_STRINGS_STRING_POOL_H
 
-#include "memory/store/IStore.h"
 
 namespace libxaos {
+
+    // Forward Declare IStore
+    namespace memory {
+        class IStore;
+    }
+
     namespace strings {
 
-        // Forward declare PooledString
+        // Forward Declare PooledString
         class PooledString;
+
+        namespace {
+            using IStore = libxaos::memory::IStore;
+        }
 
         /**
          *  @brief This class represents a pool of strings.
@@ -32,7 +41,7 @@ namespace libxaos {
 
             public:
                 //! An IStore is required to store strings in memory.
-                StringPool(IStore&&);
+                StringPool(IStore*);
                 ~StringPool();
 
                 //! No copying!
@@ -52,7 +61,8 @@ namespace libxaos {
 
             private:
                 //! Where we will store our strings
-                IStore _store;
+                //! @todo Replace with UniquePointer (when implemented)
+                IStore* _store;
                 //! The number of strings in the pool.  Needed for adding.
                 unsigned int _count;
         };

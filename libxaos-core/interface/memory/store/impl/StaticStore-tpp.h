@@ -6,6 +6,12 @@
 namespace libxaos {
     namespace memory {
 
+        template<size_t N, short A, int ID>
+        StaticStore<N, A, ID>::StaticStore() : IStore(N, A) {}
+
+        template<size_t N, short A, int ID>
+        StaticStore<N, A, ID>::~StaticStore() {}
+
         /**
          *  @brief Initialize the data store.
          *  @todo This will likely NOT work on MSVC.

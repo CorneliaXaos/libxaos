@@ -50,17 +50,17 @@ namespace libxaos {
         };
 
         //! Compares two PooledStrings (Equality)
-        inline bool operator==(const PooledString&, const PooledString&) const;
+        inline bool operator==(const PooledString&, const PooledString&);
         //! Compares two PooledStrings (Inequality)
-        inline bool operator!=(const PooledString&, const PooledString&) const;
+        inline bool operator!=(const PooledString&, const PooledString&);
         //! Compares to nullptr (Equality)
-        inline bool operator==(const PooledString&, nullptr_t) const;
+        inline bool operator==(const PooledString&, nullptr_t);
         //! Compares to nullptr (Equality)
-        inline bool operator==(nullptr_t, const PooledString&) const;
+        inline bool operator==(nullptr_t, const PooledString&);
         //! Compares to nullptr (Inequality)
-        inline bool operator!=(const PooledString&, nullptr_t) const;
+        inline bool operator!=(const PooledString&, nullptr_t);
         //! Compares to nullptr (Inequality)
-        inline bool operator!=(nullptr_t, const PooledString&) const;
+        inline bool operator!=(nullptr_t, const PooledString&);
 
     }
 }
