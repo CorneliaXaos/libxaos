@@ -4,10 +4,11 @@
 #include <cstdint>
 #include <string>
 
-#include "strings/PooledString.h"
-
 namespace libxaos {
     namespace strings {
+
+        // Forward declare PooledString
+        class PooledString;
 
         //! The number used in the hashing.
         using HashType = uint32_t;
@@ -43,12 +44,12 @@ namespace libxaos {
                 HashedString& operator=(HashedString&&);
 
                 //! Returns the hash of the string used in construction.
-                inline HashType getHash() const;
+                inline HashType getHash() const { return _hash; }
 
                 //! Uniquely identifies all nullptr strings
-                static HashType NULL_STRING;
+                static const HashType NULL_STRING;
                 //! Uniquely identifies all empty strings
-                static HashType EMPTY_STRING;
+                static const HashType EMPTY_STRING;
 
             private:
                 HashType _hash;

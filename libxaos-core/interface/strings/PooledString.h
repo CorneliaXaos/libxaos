@@ -3,10 +3,11 @@
 
 #include <cstddef>
 
-#include "strings/StringPool.h"
-
 namespace libxaos {
     namespace strings {
+
+        // Forward declare StringPool
+        class StringPool;
 
         /**
          *  @brief Represents a string in a StringPool.
@@ -40,24 +41,31 @@ namespace libxaos {
                 //! Acquires the contents of this PooledString
                 inline const char* getCharPointer() const;
 
-                //! Compares two PooledStrings (Equality)
-                inline bool operator==(const PooledString&) const;
-                //! Compares two PooledStrings (Inequality)
-                inline bool operator!=(const PooledString&) const;
-                //! Compares to nullptr (Equality)
-                inline bool operator==(nullptr_t) const;
-                //! Compares to nullptr (Inequality)
-                inline bool operator!=(nullptr_t) const;
-
             private:
                 //! Private constructor for use by the StringPool
-                PooledString(char*);
+                explicit PooledString(char*);
 
                 //! Raw string pointer referencing to StringPool memory.
                 char* _string;
         };
 
+        //! Compares two PooledStrings (Equality)
+        inline bool operator==(const PooledString&, const PooledString&) const;
+        //! Compares two PooledStrings (Inequality)
+        inline bool operator!=(const PooledString&, const PooledString&) const;
+        //! Compares to nullptr (Equality)
+        inline bool operator==(const PooledString&, nullptr_t) const;
+        //! Compares to nullptr (Equality)
+        inline bool operator==(nullptr_t, const PooledString&) const;
+        //! Compares to nullptr (Inequality)
+        inline bool operator!=(const PooledString&, nullptr_t) const;
+        //! Compares to nullptr (Inequality)
+        inline bool operator!=(nullptr_t, const PooledString&) const;
+
     }
 }
+
+// Bring in inline implementations
+#include "PooledString-inl.h"
 
 #endif   // LIBXAOS_CORE_STRINGS_POOLED_STRING_H

@@ -2,10 +2,12 @@
 #define     LIBXAOS_CORE_STRINGS_STRING_POOL_H
 
 #include "memory/store/IStore.h"
-#include "strings/PooledString.h"
 
 namespace libxaos {
     namespace strings {
+
+        // Forward declare PooledString
+        class PooledString;
 
         /**
          *  @brief This class represents a pool of strings.
@@ -20,6 +22,11 @@ namespace libxaos {
          *  some point.  In other words, one should not rely on there existing
          *  a StringPool for use until one can confirm that some system provides
          *  such a pool.
+         *
+         *  It should also be noted that in order to have a decent memory
+         *  footprint that NO STRING SHOULD BE LARGER THAN A SHORT'S LENGTH!!!
+         *  I REPEAT, MAX LENGTH OF STRING (EXCLUDING NULL CHARACTER) IS
+         *  A SHORT (uint16_t).  65536!!!!!
          */
         class StringPool {
 
@@ -39,13 +46,15 @@ namespace libxaos {
                 //! Add / Get a String to the Pool
                 PooledString process(const char*);
                 //! Query if a String is present (const char*)
-                inline bool contains(const char*) const;
+                bool contains(const char*) const;
                 //! Query if a String is present (PooledString)
-                inline bool contains(const PooledString&) const;
+                bool contains(const PooledString&) const;
 
             private:
                 //! Where we will store our strings
                 IStore _store;
+                //! The number of strings in the pool.  Needed for adding.
+                unsigned int _count;
         };
 
     }
