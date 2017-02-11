@@ -59,7 +59,8 @@ namespace libxaos {
 
             template<typename T, PointerType P>
             inline ControlBlock<T, P>::operator bool() const {
-                return _pointer;
+                // return _pointer; // This works on g++... but FUCKING MSVC...
+                return _pointer != nullptr;
             }
 
             // It'll be up to the users to make sure the initialize the strong

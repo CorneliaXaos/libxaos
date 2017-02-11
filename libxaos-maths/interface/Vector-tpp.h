@@ -209,7 +209,8 @@ namespace libxaos {
         // Magnitude Calucaltions
         template<typename T, int N>
         inline T magnitude(const Vector<T, N>& vec) {
-            return sqrt(magnitude2(vec));
+            // return sqrt(magnitude2(vec)); // ALSO DAMMIT, MSVC...
+            return static_cast<T>(sqrt(magnitude2(vec)));
         }
         template<typename T, int N>
         inline T magnitude2(const Vector<T, N>& vec) {

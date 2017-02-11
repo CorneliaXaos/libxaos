@@ -14,10 +14,13 @@ namespace libxaos {
 
         /**
          *  @brief Initialize the data store.
-         *  @todo This will likely NOT work on MSVC.
          */
         template<size_t N, short A, int ID>
-        uint8_t StaticStore<N, A, ID>::_store[] {};
+        #ifdef _MSC_VER // GODDAMIT MICROSOFT....  FOLLOW THE STANDARD...
+            uint8_t StaticStore<N, A, ID>::_store[] = "";
+        #else
+            uint8_t StaticStore<N, A, ID>::_store[] {};
+        #endif
 
         template<size_t N, short A, int ID>
         inline uint8_t* StaticStore<N, A, ID>::getRawStorage() {
