@@ -118,7 +118,7 @@ namespace libxaos {
                     return PooledString{pooledString};
                 } else {
                     // Store too small (likely) or max count reached
-                    assert(false);
+                    // Should probably report something in Debug mode...
                     // In a release build, though, we want to return a nullptr
                     return PooledString{nullptr};
                 }
