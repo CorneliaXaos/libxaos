@@ -106,8 +106,10 @@
 			<Add option="-Wall" />
 			<Add option="-std=c++11" />
 		</Compiler>
+		<Unit filename="interface/Matrix.h" />
 		<Unit filename="interface/Vector-tpp.h" />
 		<Unit filename="interface/Vector.h" />
+		<Unit filename="interface/affine.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />
