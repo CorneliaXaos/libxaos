@@ -55,6 +55,12 @@ namespace libxaos {
                 //! Creates a new Matrix based on the Initialization type.
                 Matrix(InitializationType);
                 //! Creates a new Matrix from a nested initializer list
+                //! Note that the data is initialized such that typing it
+                //! out looks like the matrix itself.  That is, the nested
+                //! lists are ROWS... as typing it out as such looks like a
+                //! proper matrix.
+                //! Any missing data is interpreted as 0.  Any extra data is
+                //! ignored.
                 explicit Matrix(
                         std::initializer_list<std::initializer_list<T>>);
                 ~Matrix();
@@ -66,15 +72,29 @@ namespace libxaos {
 
                 //! Accesses a column by reference
                 inline ColumnType& operator[](unsigned int);
+                //! Accesses a column by reference safely
+                inline ColumnType& at(unsigned int);
 
                 //! Gets a Column of the Matrix
                 inline ColumnType getColumn(unsigned int);
+                //! Gets a Column of the Matrix safely
+                inline ColumnType getColumnChecked(unsigned int);
+
                 //! Gets a Row of the Matrix
+                inline RowType getRow(unsigned int);
+                //! Gets a Row of the Matrix safely
                 inline RowType getRow(unsigned int);
 
             private:
                 ColumnType[M] _data;
         };
+
+        //! Compares two matrices (equality)
+        template<typename T, unsigned int M, unsigned int N>
+        bool operator==(const Matrix<T, M, N>&, const Matrix<T, M, N>&);
+        //! Compares two matrices (inequality)
+        template<typename T, unsigned int M, unsigned int N>
+        bool operator!=(const Matrix<T, M, N>&, const Matrix<T, M, N>&);
 
         //! Gets the Transpose of a Matrix
         template<typename T, unsigned int M, unsigned int N>
@@ -90,10 +110,50 @@ namespace libxaos {
         template<typename T, unsigned int N>
         void invert(Matrix<T, N, N>&);
 
+        //! Handles Matrix negation
+        template<typename T, unsigned int M, unsigned int N>
+        Matrix<T, M, N> operator-(const Matrix<T, M, N>&);
+
+        //! Handles Matrix addition
+        template<typename T, unsigned int M, unsigned int N>
+        Matrix<T, M, N> operator+(const Matrix<T, M, N>&,
+                const Matrix<T, M, N>&);
+        //! Handles Matrix addition assignment
+        template<typename T, unsigned int M, unsigned int N>
+        void operator+(Matrix<T, M, N>&, const Matrix<T, M, N>&);
+
+        //! Handles Matrix subtraction
+        template<typename T, unsigned int M, unsigned int N>
+        Matrix<T, M, N> operator-(const Matrix<T, M, N>&,
+                const Matrix<T, M, N>&);
+        //! Handles Matrix subtraction assignment
+        template<typename T, unsigned int M, unsigned int N>
+        void operator-(Matrix<T, M, N>&, const Matrix<T, M, N>&);
+
+        //! Handles Matrix by primitive division
+        template<typename T, unsigned int M, unsigned int N>
+        Matrix<T, M, N> operator/(const Matrix<T, M, N>&, T);
+        //! Handles Matrix by primitive division assignment
+        template<typename T, unsigned int M, unsigned int N>
+        void operator/(Matrix<T, M, N>&, T);
+
         //! Handles Matrix multiplication: (column x row) MxN * OxM = OxN
         template<typename T, unsigned int M, unsigned int N, unsigned int O>
         Matrix<T, O, N> operator*(const Matrix<T, M, N>&,
                 const Matrix<T, O, M>&);
+        //! Handles Matrix multiplication: (column x row) MxN * OxM = OxN
+        template<typename T, unsigned int M, unsigned int N, unsigned int O>
+        void operator*=(Matrix<T, M, N>&, const Matrix<T, O, M>&);
+
+        //! Handles Matrix by primitive multiplication
+        template<typename T, unsigned int M, unsigned int N>
+        Matrix<T, M, N> operator*(const Matrix<T, M, N>&, T);
+        //! Handles Matrix by primitive multiplication assignment
+        template<typename T, unsigned int M, unsigned int N>
+        void operator*=(Matrix<T, M, N>&, T);
+        //! Handles primitive by Matrix multiplication
+        template<typename T, unsigned int M, unsigned int N>
+        Matrix<T, M, N> operator*(T, const Matrix<T, M, N>&);
 
         //! Handles (row) Vector by Matrix mupltiplication (vec * mat)
         template<typename T, unsigned int M, unsigned int N>
@@ -108,7 +168,13 @@ namespace libxaos {
                 unsigned int N>
         Matrix<T, O, P> getResized(const Matrix<T, M, N>&, unsigned int,
                 unsigned int);
+
+        //! Exception for when one attempts to invert an uninvertible matrix
+        struct matrix_uninvertible {};
     }
 }
+
+// pull in implementations
+#include "Matrix-tpp.h"
 
 #endif   // LIBXAOS_MATHS_MATRIX_H

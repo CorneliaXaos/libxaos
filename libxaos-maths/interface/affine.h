@@ -50,15 +50,12 @@ namespace libxaos {
             Matrix4<T> get3DRotation(T, T, T);
             template<typename T>
             Matrix4<T> get3DRotation(const Vector3<T>&);
-            //! 3D Rotation around an arbitrary axis vector
-            template<typename T>
-            Matrix4<T> get3DRotationArbitrary(T, T, T, const Vector3<T>&);
-            template<typename T>
-            Matrix4<T> get3DRotationArbitrary(const Vector3<T>&,
-                    const Vector3<T>&);
             //! 3D Rotation of a Vector3 onto a Vector3
             template<typename T>
             Matrix4<T> get3DRotationOnto(const Vector3<T>&, const Vector3<T>&);
+            //! 3D Rotation around an arbitrary axis vector
+            template<typename T>
+            Matrix4<T> get3DRotationArbitrary(T, const Vector3<T>&);
 
             //! 2D Translation
             template<typename T>
@@ -74,5 +71,8 @@ namespace libxaos {
         }
     }
 }
+
+// pull in implementations
+#include "affine-tpp.h"
 
 #endif   // LIBXAOS_MATHS_AFFINE_H

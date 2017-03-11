@@ -144,7 +144,7 @@ namespace libxaos {
         //! Calculates the Magnitude of a Vector.
         template<typename T, int N>
         inline T magnitude(const Vector<T, N>&);
-        //! Calculates teh Magnitude squared of a Vector.
+        //! Calculates the Magnitude squared of a Vector.
         template<typename T, int N>
         inline T magnitude2(const Vector<T, N>&);
 
@@ -154,6 +154,15 @@ namespace libxaos {
         //! Calculates the Cross Product of two Vectors (only valid for N == 3).
         template<typename T, int N>
         inline T cross(const Vector<T, N>&, const Vector<T, N>&);
+
+        //! Gets the Unit Vector pointing in the provided vector's direction
+        //! (will affect integral vectors strangely)
+        template<typename T, int N>
+        inline Vector<T, N> getNormalized(const Vector<T, N>&);
+        //! Normalizes the provided vector in place
+        //! (will affect integral vectors strangely)
+        template<typename T, int N>
+        inline void normalize(Vector<T, N>&);
     }
 }
 
