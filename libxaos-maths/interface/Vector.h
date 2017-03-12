@@ -30,10 +30,11 @@ namespace libxaos {
          *  @tparam T the numeric type of the objects contained in the Vector.
          *  @tparam N the integral length of the Vector.
          */
-        template<typename T, int N>
+        template<typename T, unsigned int N>
         class Vector {
             static_assert(std::is_arithmetic<T>::value,
                     "Vectors must be arithmetic!");
+            static_assert(N > 0, "Vectors must have length!");
 
             public:
                 Vector();
@@ -85,83 +86,83 @@ namespace libxaos {
                 std::array<T, N> _data;
 
                 //! Allow the equality operator below to access _data
-                template<typename S, int M>
+                template<typename S, unsigned int M>
                 friend bool operator==(const Vector<S, M>&,
                         const Vector<S, M>&);
         };
 
         //! Checks Vector Equality
-        template<typename T, int N>
+        template<typename T, unsigned int N>
         inline bool operator==(const Vector<T, N>&, const Vector<T, N>&);
         //! Checks Vector Inequality
-        template<typename T, int N>
+        template<typename T, unsigned int N>
         inline bool operator!=(const Vector<T, N>&, const Vector<T, N>&);
 
         //! Negates a Vector
-        template<typename T, int N>
+        template<typename T, unsigned int N>
         inline Vector<T, N> operator-(const Vector<T, N>&);
 
         //! Scales (multiplication) and returns a new Vector.
-        template<typename T, int N>
+        template<typename T, unsigned int N>
         inline Vector<T, N> operator*(const Vector<T, N>&, T);
         //! Scales (multiplication) and returns a new Vector.
-        template<typename T, int N>
+        template<typename T, unsigned int N>
         inline Vector<T, N> operator*(T, const Vector<T, N>&);
         //! Scales (multiplication) the argument Vector.
-        template<typename T, int N>
+        template<typename T, unsigned int N>
         inline Vector<T, N>& operator*=(Vector<T, N>&, T);
 
         //! Scales (division) and returns a new Vector.
-        template<typename T, int N>
+        template<typename T, unsigned int N>
         inline Vector<T, N> operator/(const Vector<T, N>&, T);
         //! Scales (division) the argument Vector.
-        template<typename T, int N>
+        template<typename T, unsigned int N>
         inline Vector<T, N>& operator/=(Vector<T, N>&, T);
 
         //! Sums and returns a new Vector.
-        template<typename T, int N>
+        template<typename T, unsigned int N>
         inline Vector<T, N> operator+(const Vector<T, N>&, const Vector<T, N>&);
         //! Sums the argument vectors and stores the result in the first.
-        template<typename T, int N>
+        template<typename T, unsigned int N>
         inline Vector<T, N>& operator+=(Vector<T,N>&, const Vector<T, N>&);
         //! Sums each Vector component with a scalar.
-        template<typename T, int N>
+        template<typename T, unsigned int N>
         inline Vector<T, N> operator+(const Vector<T, N>&, T);
         //! Sums each Vector component with a scalar.
-        template<typename T, int N>
+        template<typename T, unsigned int N>
         inline Vector<T, N> operator+(T, const Vector<T, N>&);
 
         //! Differences and returns a new Vector.
-        template<typename T, int N>
+        template<typename T, unsigned int N>
         inline Vector<T, N> operator-(const Vector<T, N>&, const Vector<T, N>&);
         //! Differences the argument vectors and stores the result in the first.
-        template<typename T, int N>
+        template<typename T, unsigned int N>
         inline Vector<T, N>& operator-=(Vector<T, N>&, const Vector<T, N>&);
         //! Differences each Vector component with a scalar.
-        template<typename T, int N>
+        template<typename T, unsigned int N>
         inline Vector<T, N> operator-(const Vector<T, N>&, T);
 
         //! Calculates the Magnitude of a Vector.
-        template<typename T, int N>
+        template<typename T, unsigned int N>
         inline T magnitude(const Vector<T, N>&);
         //! Calculates the Magnitude squared of a Vector.
-        template<typename T, int N>
+        template<typename T, unsigned int N>
         inline T magnitude2(const Vector<T, N>&);
 
         //! Calculates the Dot Product of two Vectors.
-        template<typename T, int N>
+        template<typename T, unsigned int N>
         inline T dot(const Vector<T, N>&, const Vector<T, N>&);
         //! Calculates the Cross Product of two Vectors (only valid for N == 3).
-        template<typename T, int N>
+        template<typename T, unsigned int N>
         inline T cross(const Vector<T, N>&, const Vector<T, N>&);
 
         //! Gets the Unit Vector pointing in the provided vector's direction
         //! (will affect integral vectors strangely)
-        template<typename T, int N>
+        template<typename T, unsigned int N>
         inline Vector<T, N> getNormalized(const Vector<T, N>&);
         //! Normalizes the provided vector in place
         //! (will affect integral vectors strangely)
-        template<typename T, int N>
+        template<typename T, unsigned int N>
         inline void normalize(Vector<T, N>&);
     }
 }

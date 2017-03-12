@@ -13,7 +13,9 @@
 #include "catch.hpp"
 
 // Define a few types
+using IntMatrix2 = libxaos::maths::Matrix<int, 2, 2>;
 using IntMatrix3 = libxaos::maths::Matrix<int, 3, 3>;
+using IntMatrix4 = libxaos::maths::Matrix<int, 4, 4>;
 using IntVector3 = libxaos::maths::Vector<int, 3>;
 
 using FloatMatrix4 = libxaos::maths::Matrix<float, 4, 4>;
@@ -39,7 +41,7 @@ TEST_CASE("MATHS:Matrix | Can Create Matrices", "[maths]") {
             REQUIRE((mat2[col][row] == val));
 
             // Check mat3
-            REQUIRE((mat3[col][row] == (col * 3 + row + 1)));
+            REQUIRE((mat3[col][row] == (row * 3 + col + 1)));
         }
     }
 }
@@ -57,7 +59,7 @@ TEST_CASE("MATHS:Matrix | Can Access Columns by reference", "[maths]") {
     IntMatrix3::ColumnType col1 = mat.at(1);
     mat[2] = IntMatrix3::ColumnType{1, 2, 3};
 
-    REQUIRE_THROWS((mat.at(3)), std::out_of_range);
+    REQUIRE_THROWS_AS((mat.at(3)), std::out_of_range);
 
     REQUIRE((col0 == IntMatrix3::ColumnType{1, 4, 7}));
     REQUIRE((col1 == IntMatrix3::ColumnType{2, 5, 8}));
@@ -76,7 +78,7 @@ TEST_CASE("MATHS:Matrix | Can Access Columns", "[maths]") {
     IntMatrix3::ColumnType col0 = mat.getColumn(0);
     IntMatrix3::ColumnType col1 = mat.getColumnChecked(1);
 
-    REQUIRE_THROWS((mat.getColumnChecked(3)), std::out_of_range);
+    REQUIRE_THROWS_AS((mat.getColumnChecked(3)), std::out_of_range);
 
     REQUIRE((col0 == IntMatrix3::ColumnType{1, 4, 7}));
     REQUIRE((col1 == IntMatrix3::ColumnType{2, 5, 8}));
@@ -94,7 +96,7 @@ TEST_CASE("MATHS:Matrix | Can Access Rows", "[maths]") {
     IntMatrix3::RowType row0 = mat.getRow(0);
     IntMatrix3::RowType row1 = mat.getRowChecked(1);
 
-    REQUIRE_THROWS((mat.getRowChecked(3)), std::out_of_range);
+    REQUIRE_THROWS_AS((mat.getRowChecked(3)), std::out_of_range);
 
     REQUIRE((row0 == IntMatrix3::RowType{1, 2, 3}));
     REQUIRE((row1 == IntMatrix3::RowType{4, 5, 6}));
@@ -151,7 +153,7 @@ TEST_CASE("MATHS:Matrix | Can Inverse Matrices", "[maths]") {
     };
 
     FloatMatrix4 mat3 = mat2 * getInverse(mat2);
-    REQUIRE_THROWS(invert(mat1), libxaos::maths::matrix_uninvertible);
+    REQUIRE_THROWS_AS(invert(mat1), libxaos::maths::MatrixUninvertible);
 
     // Manually check because direct equals compare with floats is BAD
     for (int col = 0; col < 4; col++) {
@@ -248,8 +250,8 @@ TEST_CASE("MATHS:Matrix | Can Divide Matrices by Primitives", "[maths]") {
         }
     };
 
-    FloatMatrix4 mat3 = ma1 / 2;
-    mat2 /= 3;
+    FloatMatrix4 mat3 = mat1 / 2.0F;
+    mat2 /= 3.0F;
 
     REQUIRE(mat3 == ans);
     REQUIRE(mat2 == ans);
@@ -258,9 +260,9 @@ TEST_CASE("MATHS:Matrix | Can Divide Matrices by Primitives", "[maths]") {
 TEST_CASE("MATHS:Matrix | Matrix Multiplication", "[maths]") {
     IntMatrix3 mat1 {
         {
-            {1, 4, 7},
-            {2, 5, 8},
-            {3, 6, 9}
+            {1, 2, 3},
+            {4, 5, 6},
+            {7, 8, 9}
         }
     };
     IntMatrix3 mat2 {
@@ -353,6 +355,6 @@ TEST_CASE("MATHS:Matrix | Matrices are 'resizable'", "[maths]") {
         }
     };
 
-    REQUIRE((getResized<2, 2>(mat1, 0, 0) == mat2));
-    REQUIRE((getResized<4, 4>(mat1, 0, 0) == mat3));
+    REQUIRE((libxaos::maths::getResized<2, 2>(mat1, 0, 0) == mat2));
+    REQUIRE((libxaos::maths::getResized<4, 4>(mat1, 0, 0) == mat3));
 }

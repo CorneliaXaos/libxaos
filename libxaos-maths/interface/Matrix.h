@@ -9,11 +9,6 @@
 namespace libxaos {
     namespace maths {
 
-        namespace {
-            template<typename T, int M>
-            using Vector = libxaos::maths::Vector<T, M>;
-        }
-
         /**
          *  @brief This class represenets an MxN matrix.
          *
@@ -53,7 +48,7 @@ namespace libxaos {
                 };
 
                 //! Creates a new Matrix based on the Initialization type.
-                Matrix(InitializationType);
+                explicit Matrix(InitializationType);
                 //! Creates a new Matrix from a nested initializer list
                 //! Note that the data is initialized such that typing it
                 //! out looks like the matrix itself.  That is, the nested
@@ -72,105 +67,115 @@ namespace libxaos {
 
                 //! Accesses a column by reference
                 inline ColumnType& operator[](unsigned int);
+                //! Accesses a column by const reference
+                inline const ColumnType& operator[](unsigned int) const;
                 //! Accesses a column by reference safely
                 inline ColumnType& at(unsigned int);
+                //! Accesses a column by const reference safely
+                inline const ColumnType& at(unsigned int) const;
 
                 //! Gets a Column of the Matrix
-                inline ColumnType getColumn(unsigned int);
+                inline ColumnType getColumn(unsigned int) const;
                 //! Gets a Column of the Matrix safely
-                inline ColumnType getColumnChecked(unsigned int);
+                inline ColumnType getColumnChecked(unsigned int) const;
 
                 //! Gets a Row of the Matrix
-                inline RowType getRow(unsigned int);
+                inline RowType getRow(unsigned int) const;
                 //! Gets a Row of the Matrix safely
-                inline RowType getRow(unsigned int);
+                inline RowType getRowChecked(unsigned int) const;
 
             private:
-                ColumnType[M] _data;
+                ColumnType _data[M];
         };
 
         //! Compares two matrices (equality)
         template<typename T, unsigned int M, unsigned int N>
-        bool operator==(const Matrix<T, M, N>&, const Matrix<T, M, N>&);
+        inline bool operator==(const Matrix<T, M, N>&, const Matrix<T, M, N>&);
         //! Compares two matrices (inequality)
         template<typename T, unsigned int M, unsigned int N>
-        bool operator!=(const Matrix<T, M, N>&, const Matrix<T, M, N>&);
+        inline bool operator!=(const Matrix<T, M, N>&, const Matrix<T, M, N>&);
 
         //! Gets the Transpose of a Matrix
         template<typename T, unsigned int M, unsigned int N>
-        Matrix<T, M, N> getTranspose(const Matrix<T, M, N>&);
-        //! Transposes the passed in Matrix "in place"
-        template<typename T, unsigned int M, unsigned int N>
-        void transpose(Matrix<T, M, N>&);
+        inline Matrix<T, N, M> getTranspose(const Matrix<T, M, N>&);
+        //! Transposes the passed in square Matrix "in place"
+        template<typename T, unsigned int N>
+        inline void transpose(Matrix<T, N, N>&);
 
         //! Gets the Inverse of a square Matrix (may throw)
         template<typename T, unsigned int N>
-        Matrix<T, N, N> getInverse(const Matrix<T, N, N>&);
+        inline Matrix<T, N, N> getInverse(const Matrix<T, N, N>&);
         //! Inverses a Matrix "in place" (may throw)
         template<typename T, unsigned int N>
         void invert(Matrix<T, N, N>&);
 
         //! Handles Matrix negation
         template<typename T, unsigned int M, unsigned int N>
-        Matrix<T, M, N> operator-(const Matrix<T, M, N>&);
+        inline Matrix<T, M, N> operator-(const Matrix<T, M, N>&);
 
         //! Handles Matrix addition
         template<typename T, unsigned int M, unsigned int N>
-        Matrix<T, M, N> operator+(const Matrix<T, M, N>&,
+        inline Matrix<T, M, N> operator+(const Matrix<T, M, N>&,
                 const Matrix<T, M, N>&);
         //! Handles Matrix addition assignment
         template<typename T, unsigned int M, unsigned int N>
-        void operator+(Matrix<T, M, N>&, const Matrix<T, M, N>&);
+        inline Matrix<T, M, N>& operator+=(Matrix<T, M, N>&,
+                const Matrix<T, M, N>&);
 
         //! Handles Matrix subtraction
         template<typename T, unsigned int M, unsigned int N>
-        Matrix<T, M, N> operator-(const Matrix<T, M, N>&,
+        inline Matrix<T, M, N> operator-(const Matrix<T, M, N>&,
                 const Matrix<T, M, N>&);
         //! Handles Matrix subtraction assignment
         template<typename T, unsigned int M, unsigned int N>
-        void operator-(Matrix<T, M, N>&, const Matrix<T, M, N>&);
+        inline Matrix<T, M, N>& operator-=(Matrix<T, M, N>&,
+                const Matrix<T, M, N>&);
 
         //! Handles Matrix by primitive division
         template<typename T, unsigned int M, unsigned int N>
-        Matrix<T, M, N> operator/(const Matrix<T, M, N>&, T);
+        inline Matrix<T, M, N> operator/(const Matrix<T, M, N>&, T);
         //! Handles Matrix by primitive division assignment
         template<typename T, unsigned int M, unsigned int N>
-        void operator/(Matrix<T, M, N>&, T);
+        inline Matrix<T, M, N>& operator/=(Matrix<T, M, N>&, T);
 
         //! Handles Matrix multiplication: (column x row) MxN * OxM = OxN
         template<typename T, unsigned int M, unsigned int N, unsigned int O>
-        Matrix<T, O, N> operator*(const Matrix<T, M, N>&,
+        inline Matrix<T, O, N> operator*(const Matrix<T, M, N>&,
                 const Matrix<T, O, M>&);
-        //! Handles Matrix multiplication: (column x row) MxN * OxM = OxN
-        template<typename T, unsigned int M, unsigned int N, unsigned int O>
-        void operator*=(Matrix<T, M, N>&, const Matrix<T, O, M>&);
+        //! Handles square Matrix multiplication assignment
+        template<typename T, unsigned int N>
+        inline Matrix<T, N, N>& operator*=(Matrix<T, N, N>&,
+                const Matrix<T, N, N>&);
 
         //! Handles Matrix by primitive multiplication
         template<typename T, unsigned int M, unsigned int N>
-        Matrix<T, M, N> operator*(const Matrix<T, M, N>&, T);
+        inline Matrix<T, M, N> operator*(const Matrix<T, M, N>&, T);
         //! Handles Matrix by primitive multiplication assignment
         template<typename T, unsigned int M, unsigned int N>
-        void operator*=(Matrix<T, M, N>&, T);
+        inline Matrix<T, M, N>& operator*=(Matrix<T, M, N>&, T);
         //! Handles primitive by Matrix multiplication
         template<typename T, unsigned int M, unsigned int N>
-        Matrix<T, M, N> operator*(T, const Matrix<T, M, N>&);
+        inline Matrix<T, M, N> operator*(T, const Matrix<T, M, N>&);
 
         //! Handles (row) Vector by Matrix mupltiplication (vec * mat)
         template<typename T, unsigned int M, unsigned int N>
-        Vector<T, M> operator*(const Vector<T, N>&, const Matrix<T, M, N>&);
+        inline Vector<T, M> operator*(const Vector<T, N>&,
+                const Matrix<T, M, N>&);
         //! Handles Matrix by (column) Vector multiplication (mat * vec)
         template<typename T, unsigned int M, unsigned int N>
-        Vector<T, N> operator*(const Matrix<T, M, N>&, const Vector<T, M>&);
+        inline Vector<T, N> operator*(const Matrix<T, M, N>&,
+                const Vector<T, M>&);
 
         //! Gets a SubMatrix (or a SuperMatrix filled with 0's) of a Matrix
-        //! Use it like: `getResized<3, 5>(myMat);`
+        //! Use it like: `getResized<3, 5>(myMat);` (<col, row>)
         template<unsigned int O, unsigned int P, typename T, unsigned int M,
                 unsigned int N>
-        Matrix<T, O, P> getResized(const Matrix<T, M, N>&, unsigned int,
+        inline Matrix<T, O, P> getResized(const Matrix<T, M, N>&, unsigned int,
                 unsigned int);
 
         //! Exception for when one attempts to invert an uninvertible matrix
-        struct matrix_uninvertible {};
+        //! @todo A proper exceptions namespace
+        struct MatrixUninvertible {};
     }
 }
 

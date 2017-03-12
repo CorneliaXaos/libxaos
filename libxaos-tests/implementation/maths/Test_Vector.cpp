@@ -148,9 +148,9 @@ TEST_CASE("MATHS:Vector | Cross Product", "[maths]") {
 TEST_CASE("MATHS:Vector | Normalization", "[maths]") {
     FloatVector3 vec1 {1, 3, 5};
     FloatVector3 vec2 {-1, -3, -5};
-    FloatVector3 normalized = getNormalize(vec);
+    FloatVector3 normalized = getNormalized(vec1);
     normalize(vec2);
 
-    REQUIRE((1 - magnitude(vec1) <= 0.001));
+    REQUIRE((1 - magnitude(normalized) <= 0.001));
     REQUIRE((1 - magnitude(vec2) <= 0.001));
 }
