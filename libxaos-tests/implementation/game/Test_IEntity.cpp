@@ -8,13 +8,13 @@
  #include <string>
 
  #include "IEntity.h"
- #include "Vector.h"
+ #include "linear/Vector.h"
 
  #include "catch.hpp"
 
  // Define a few types
- using IntVector3 = libxaos::maths::Vector<int, 3>;
- using FloatVector4 = libxaos::maths::Vector<float, 4>;
+ using IntVector3 = libxaos::linear::Vector<int, 3>;
+ using FloatVector4 = libxaos::linear::Vector<float, 4>;
 
  using ThreeDEntity = libxaos::game::IEntity<int, 3>;
  using FourDEntity = libxaos::game::IEntity<float, 4>;

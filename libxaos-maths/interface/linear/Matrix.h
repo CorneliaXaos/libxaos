@@ -1,13 +1,13 @@
-#ifndef     LIBXAOS_MATHS_MATRIX_H
-#define     LIBXAOS_MATHS_MATRIX_H
+#ifndef     LIBXAOS_MATHS_LINEAR_MATRIX_H
+#define     LIBXAOS_MATHS_LINEAR_MATRIX_H
 
 #include <initializer_list>
 #include <type_traits>
 
-#include "Vector.h"
+#include "linear/Vector.h"
 
 namespace libxaos {
-    namespace maths {
+    namespace linear {
 
         /**
          *  @brief This class represenets an MxN matrix.
@@ -182,4 +182,4 @@ namespace libxaos {
 // pull in implementations
 #include "Matrix-tpp.h"
 
-#endif   // LIBXAOS_MATHS_MATRIX_H
+#endif   // LIBXAOS_MATHS_LINEAR_MATRIX_H

@@ -7,22 +7,22 @@
 
 #include <cmath>
 
-#include "affine.h"
-#include "Matrix.h"
-#include "Vector.h"
+#include "linear/affine.h"
+#include "linear/Matrix.h"
+#include "linear/Vector.h"
 
 #include "catch.hpp"
 
 // Define a few types
-using FloatVector2 = libxaos::maths::Vector<float, 2>;
-using FloatVector3 = libxaos::maths::Vector<float, 3>;
-using FloatVector4 = libxaos::maths::Vector<float, 4>;
+using FloatVector2 = libxaos::linear::Vector<float, 2>;
+using FloatVector3 = libxaos::linear::Vector<float, 3>;
+using FloatVector4 = libxaos::linear::Vector<float, 4>;
 
-using FloatMatrix3 = libxaos::maths::Matrix<float, 3, 3>;
-using FloatMatrix4 = libxaos::maths::Matrix<float, 4, 4>;
+using FloatMatrix3 = libxaos::linear::Matrix<float, 3, 3>;
+using FloatMatrix4 = libxaos::linear::Matrix<float, 4, 4>;
 
 // And bring in the namespace.. because that's a lot of typing...
-using namespace libxaos::maths::affine;
+using namespace libxaos::linear::affine;
 
 // And finally a constant expression:
 constexpr double PI() {return std::acos(-1);}

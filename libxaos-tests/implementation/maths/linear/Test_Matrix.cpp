@@ -7,18 +7,18 @@
 
 #include <exception>
 
-#include "Matrix.h"
-#include "Vector.h"
+#include "linear/Matrix.h"
+#include "linear/Vector.h"
 
 #include "catch.hpp"
 
 // Define a few types
-using IntMatrix2 = libxaos::maths::Matrix<int, 2, 2>;
-using IntMatrix3 = libxaos::maths::Matrix<int, 3, 3>;
-using IntMatrix4 = libxaos::maths::Matrix<int, 4, 4>;
-using IntVector3 = libxaos::maths::Vector<int, 3>;
+using IntMatrix2 = libxaos::linear::Matrix<int, 2, 2>;
+using IntMatrix3 = libxaos::linear::Matrix<int, 3, 3>;
+using IntMatrix4 = libxaos::linear::Matrix<int, 4, 4>;
+using IntVector3 = libxaos::linear::Vector<int, 3>;
 
-using FloatMatrix4 = libxaos::maths::Matrix<float, 4, 4>;
+using FloatMatrix4 = libxaos::linear::Matrix<float, 4, 4>;
 
 TEST_CASE("MATHS:Matrix | Can Create Matrices", "[maths]") {
     IntMatrix3 mat1 {IntMatrix3::ZERO};
@@ -153,7 +153,7 @@ TEST_CASE("MATHS:Matrix | Can Inverse Matrices", "[maths]") {
     };
 
     FloatMatrix4 mat3 = mat2 * getInverse(mat2);
-    REQUIRE_THROWS_AS(invert(mat1), libxaos::maths::MatrixUninvertible);
+    REQUIRE_THROWS_AS(invert(mat1), libxaos::linear::MatrixUninvertible);
 
     // Manually check because direct equals compare with floats is BAD
     for (int col = 0; col < 4; col++) {
@@ -355,6 +355,6 @@ TEST_CASE("MATHS:Matrix | Matrices are 'resizable'", "[maths]") {
         }
     };
 
-    REQUIRE((libxaos::maths::getResized<2, 2>(mat1, 0, 0) == mat2));
-    REQUIRE((libxaos::maths::getResized<4, 4>(mat1, 0, 0) == mat3));
+    REQUIRE((libxaos::linear::getResized<2, 2>(mat1, 0, 0) == mat2));
+    REQUIRE((libxaos::linear::getResized<4, 4>(mat1, 0, 0) == mat3));
 }

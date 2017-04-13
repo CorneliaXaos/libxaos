@@ -7,7 +7,7 @@
 #include <exception>
 
 namespace libxaos {
-    namespace maths {
+    namespace linear {
         namespace affine {
 
             // 2D Scaling

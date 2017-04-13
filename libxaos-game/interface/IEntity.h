@@ -5,7 +5,7 @@
 #include <string>
 #include <type_traits>
 
-#include "Vector.h"
+#include "linear/Vector.h"
 
 namespace libxaos {
     namespace game {
@@ -13,7 +13,7 @@ namespace libxaos {
         namespace {
 
             template<typename T, int N>
-            using Vector = libxaos::maths::Vector<T, N>;
+            using Vector = libxaos::linear::Vector<T, N>;
         }
 
         /**

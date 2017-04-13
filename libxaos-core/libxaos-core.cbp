@@ -136,6 +136,7 @@
 		<Unit filename="interface/timing/Clock.h" />
 		<Unit filename="interface/timing/Stopwatch-inl.h" />
 		<Unit filename="interface/timing/Stopwatch.h" />
+		<Unit filename="interface/utility/cpu.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

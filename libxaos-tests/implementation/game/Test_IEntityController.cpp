@@ -11,12 +11,12 @@
 #include "IEntity.h"
 #include "IEntityController.h"
 #include "pointers/shared_pointers.h"
-#include "Vector.h"
+#include "linear/Vector.h"
 
 #include "catch.hpp"
 
 // Define a few types
-using IntVector3 = libxaos::maths::Vector<int, 3>;
+using IntVector3 = libxaos::linear::Vector<int, 3>;
 using Entity = libxaos::game::IEntity<int, 3>;
 using WeakEntityPointer = libxaos::pointers::WeakPointer<Entity>;
 using StrongEntityPointer = libxaos::pointers::StrongPointer<Entity>;

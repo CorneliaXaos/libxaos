@@ -1,11 +1,11 @@
-#ifndef     LIBXAOS_MATHS_AFFINE_H
-#define     LIBXAOS_MATHS_AFFINE_H
+#ifndef     LIBXAOS_MATHS_LINEAR_AFFINE_H
+#define     LIBXAOS_MATHS_LINEAR_AFFINE_H
 
-#include "Matrix.h"
-#include "Vector.h"
+#include "linear/Matrix.h"
+#include "linear/Vector.h"
 
 namespace libxaos {
-    namespace maths {
+    namespace linear {
 
         /**
          *  @brief Contains methods for producing 2D and 3D affine transforms.
@@ -18,14 +18,14 @@ namespace libxaos {
 
             namespace {
                 template<typename T>
-                using Matrix3 = libxaos::maths::Matrix<T, 3, 3>;
+                using Matrix3 = libxaos::linear::Matrix<T, 3, 3>;
                 template<typename T>
-                using Matrix4 = libxaos::maths::Matrix<T, 4, 4>;
+                using Matrix4 = libxaos::linear::Matrix<T, 4, 4>;
 
                 template<typename T>
-                using Vector2 = libxaos::maths::Vector<T, 2>;
+                using Vector2 = libxaos::linear::Vector<T, 2>;
                 template<typename T>
-                using Vector3 = libxaos::maths::Vector<T, 3>;
+                using Vector3 = libxaos::linear::Vector<T, 3>;
             }
 
             //! 2D Scaling
@@ -85,4 +85,4 @@ namespace libxaos {
 // pull in implementations
 #include "affine-tpp.h"
 
-#endif   // LIBXAOS_MATHS_AFFINE_H
+#endif   // LIBXAOS_MATHS_LINEAR_AFFINE_H

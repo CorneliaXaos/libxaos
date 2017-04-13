@@ -2,48 +2,39 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug_x86" />
-	<File name="interface/affine.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="interface/linear/affine-tpp.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1023" topLine="12" />
+			<Cursor1 position="173" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="interface/Vector-tpp.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="interface/linear/affine.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="661" topLine="0" />
+			<Cursor1 position="938" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="interface/Vector.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="interface/sse/SSEType.h" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3451" topLine="139" />
+			<Cursor1 position="355" topLine="39" />
 		</Cursor>
 	</File>
-	<File name="interface/Matrix.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="interface/linear/Matrix.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="6632" topLine="125" />
+			<Cursor1 position="154" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="interface/Matrix-tpp.h" open="1" top="1" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="interface/linear/Matrix-tpp.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="7149" topLine="114" />
+			<Cursor1 position="239" topLine="3" />
 		</Cursor>
-		<Folding>
-			<Collapse line="41" />
-			<Collapse line="47" />
-			<Collapse line="52" />
-			<Collapse line="59" />
-			<Collapse line="64" />
-			<Collapse line="92" />
-		</Folding>
 	</File>
-	<File name="interface/affine-tpp.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="interface/linear/Vector.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="6354" topLine="105" />
+			<Cursor1 position="7281" topLine="49" />
 		</Cursor>
-		<Folding>
-			<Collapse line="14" />
-			<Collapse line="24" />
-			<Collapse line="30" />
-			<Collapse line="41" />
-		</Folding>
+	</File>
+	<File name="interface/linear/Vector-tpp.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="185" topLine="144" />
+		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

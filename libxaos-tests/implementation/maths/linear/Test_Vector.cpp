@@ -6,16 +6,16 @@
  */
 #include <cmath>
 
-#include "Vector.h"
+#include "linear/Vector.h"
 
 #include "catch.hpp"
 
 // Define a few types
-using IntVector1 = libxaos::maths::Vector<int, 1>;
-using IntVector2 = libxaos::maths::Vector<int, 2>;
-using IntVector3 = libxaos::maths::Vector<int, 3>;
-using IntVector4 = libxaos::maths::Vector<int, 4>;
-using FloatVector3 = libxaos::maths::Vector<float, 3>;
+using IntVector1 = libxaos::linear::Vector<int, 1>;
+using IntVector2 = libxaos::linear::Vector<int, 2>;
+using IntVector3 = libxaos::linear::Vector<int, 3>;
+using IntVector4 = libxaos::linear::Vector<int, 4>;
+using FloatVector3 = libxaos::linear::Vector<float, 3>;
 
 TEST_CASE("MATHS:Vector | Can Create Vectors", "[maths]") {
     // Default initialize several Vectors

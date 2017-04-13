@@ -8,7 +8,7 @@
 #include <utility>
 
 namespace libxaos {
-    namespace maths {
+    namespace linear {
 
         // Constructors
         template<typename T, unsigned int N>

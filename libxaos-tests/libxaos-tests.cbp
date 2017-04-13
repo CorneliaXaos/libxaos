@@ -120,9 +120,9 @@
 		<Unit filename="implementation/game/Test_IEntity.cpp" />
 		<Unit filename="implementation/game/Test_IEntityController.cpp" />
 		<Unit filename="implementation/main.cpp" />
-		<Unit filename="implementation/maths/Test_Matrix.cpp" />
-		<Unit filename="implementation/maths/Test_Vector.cpp" />
-		<Unit filename="implementation/maths/Test_affine.cpp" />
+		<Unit filename="implementation/maths/linear/Test_Matrix.cpp" />
+		<Unit filename="implementation/maths/linear/Test_Vector.cpp" />
+		<Unit filename="implementation/maths/linear/Test_affine.cpp" />
 		<Unit filename="interface/catch.hpp" />
 		<Extensions>
 			<code_completion />

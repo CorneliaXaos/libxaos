@@ -1,12 +1,12 @@
-#ifndef     LIBXAOS_MATHS_VECTOR_H
-#define     LIBXAOS_MATHS_VECTOR_H
+#ifndef     LIBXAOS_MATHS_LINEAR_VECTOR_H
+#define     LIBXAOS_MATHS_LINEAR_VECTOR_H
 
 #include <array>
 #include <initializer_list>
 #include <type_traits>
 
 namespace libxaos {
-    namespace maths {
+    namespace linear {
 
         namespace {
 
@@ -170,4 +170,4 @@ namespace libxaos {
 // Pull in implementations
 #include "Vector-tpp.h"
 
-#endif   // LIBXAOS_MATHS_VECTOR_H
+#endif   // LIBXAOS_MATHS_LINEAR_VECTOR_H
