@@ -1,9 +1,9 @@
 #ifndef     LIBXAOS_MATHS_LINEAR_VECTOR_H
 #define     LIBXAOS_MATHS_LINEAR_VECTOR_H
 
-#include <array>
 #include <initializer_list>
 #include <type_traits>
+#include <valarray>
 
 namespace libxaos {
     namespace linear {
@@ -17,6 +17,33 @@ namespace libxaos {
                 return index < n;
             }
         }
+
+        // Forward declare the class
+        template<typename T, unsigned int N>
+        class Vector;
+
+        // Forward declare the friend operators
+        //! Checks Vector Equality
+        template<typename T, unsigned int N>
+        inline bool operator==(const Vector<T, N>&, const Vector<T, N>&);
+        //! Negates a Vector
+        template<typename T, unsigned int N>
+        inline Vector<T, N> operator-(const Vector<T, N>&);
+        //! Scales (multiplication) the argument Vector.
+        template<typename T, unsigned int N>
+        inline Vector<T, N>& operator*=(Vector<T, N>&, T);
+        //! Scales (division) the argument Vector.
+        template<typename T, unsigned int N>
+        inline Vector<T, N>& operator/=(Vector<T, N>&, T);
+        //! Sums the argument vectors and stores the result in the first.
+        template<typename T, unsigned int N>
+        inline Vector<T, N>& operator+=(Vector<T,N>&, const Vector<T, N>&);
+        //! Differences the argument vectors and stores the result in the first.
+        template<typename T, unsigned int N>
+        inline Vector<T, N>& operator-=(Vector<T, N>&, const Vector<T, N>&);
+        //! Calculates the Dot Product of two Vectors.
+        template<typename T, unsigned int N>
+        inline T dot(const Vector<T, N>&, const Vector<T, N>&);
 
         /**
          *  @brief This class represents an N length Vector of type T.
@@ -40,6 +67,8 @@ namespace libxaos {
                 Vector();
                 //! Initializes the Vector from a List.
                 explicit Vector(std::initializer_list<T>);
+                //! Initializes the Vector with the same value in every index
+                explicit Vector(T);
                 ~Vector();
 
                 Vector(const Vector<T, N>&);
@@ -69,38 +98,46 @@ namespace libxaos {
                 inline EnableIf<HasIndex(M, 2), void> z(T);
 
                 //! Accesses/Sets the Nth element of the Vector.
-                inline T& operator[](int);
+                inline T& operator[](unsigned int);
                 //! Accesses the Nth element of the Vector.
-                inline const T& operator[](int) const;
+                inline const T& operator[](unsigned int) const;
 
                 //! Safely accesses/sets the Nth element of the Vector.
-                inline T& at(int);
+                inline T& at(unsigned int);
                 //! Safely accesses the Nth element of the Vector.
-                inline const T& at(int) const;
+                inline const T& at(unsigned int) const;
 
                 //! The size of this Vector.
                 static constexpr const int SIZE = N;
 
             private:
                 //! The internal data held within this Vector.
-                std::array<T, N> _data;
+                std::valarray<T> _data;
 
-                //! Allow the equality operator below to access _data
-                template<typename S, unsigned int M>
-                friend bool operator==(const Vector<S, M>&,
-                        const Vector<S, M>&);
+                // Friend Operators
+                //! Allow the equality operator to access _data
+                friend bool operator==<T, N>(const Vector<T, N>&,
+                        const Vector<T, N>&);
+                //! Allow the negation operator to access _data
+                friend Vector<T, N> operator-<T, N>(const Vector<T, N>&);
+                //! Allow the multiplication operator to access _data
+                friend Vector<T, N>& operator*=<T, N>(Vector<T, N>&, T);
+                //! Allow the division operator to access _data
+                friend Vector<T, N>& operator/=<T, N>(Vector<T, N>&, T);
+                //! Allow the addition operator to access _data
+                friend Vector<T, N>& operator+=<T, N>(Vector<T,N>&,
+                        const Vector<T, N>&);
+                //! Allow the difference operator to access _data
+                friend Vector<T, N>& operator-=<T, N>(Vector<T, N>&,
+                        const Vector<T, N>&);
+                //! Allow the dot product "operator" to access _data
+                friend T dot<T, N>(const Vector<T, N>&, const Vector<T, N>&);
         };
 
-        //! Checks Vector Equality
-        template<typename T, unsigned int N>
-        inline bool operator==(const Vector<T, N>&, const Vector<T, N>&);
+        // Operators defined based on the friend operators
         //! Checks Vector Inequality
         template<typename T, unsigned int N>
         inline bool operator!=(const Vector<T, N>&, const Vector<T, N>&);
-
-        //! Negates a Vector
-        template<typename T, unsigned int N>
-        inline Vector<T, N> operator-(const Vector<T, N>&);
 
         //! Scales (multiplication) and returns a new Vector.
         template<typename T, unsigned int N>
@@ -108,23 +145,14 @@ namespace libxaos {
         //! Scales (multiplication) and returns a new Vector.
         template<typename T, unsigned int N>
         inline Vector<T, N> operator*(T, const Vector<T, N>&);
-        //! Scales (multiplication) the argument Vector.
-        template<typename T, unsigned int N>
-        inline Vector<T, N>& operator*=(Vector<T, N>&, T);
 
         //! Scales (division) and returns a new Vector.
         template<typename T, unsigned int N>
         inline Vector<T, N> operator/(const Vector<T, N>&, T);
-        //! Scales (division) the argument Vector.
-        template<typename T, unsigned int N>
-        inline Vector<T, N>& operator/=(Vector<T, N>&, T);
 
         //! Sums and returns a new Vector.
         template<typename T, unsigned int N>
         inline Vector<T, N> operator+(const Vector<T, N>&, const Vector<T, N>&);
-        //! Sums the argument vectors and stores the result in the first.
-        template<typename T, unsigned int N>
-        inline Vector<T, N>& operator+=(Vector<T,N>&, const Vector<T, N>&);
         //! Sums each Vector component with a scalar.
         template<typename T, unsigned int N>
         inline Vector<T, N> operator+(const Vector<T, N>&, T);
@@ -135,9 +163,6 @@ namespace libxaos {
         //! Differences and returns a new Vector.
         template<typename T, unsigned int N>
         inline Vector<T, N> operator-(const Vector<T, N>&, const Vector<T, N>&);
-        //! Differences the argument vectors and stores the result in the first.
-        template<typename T, unsigned int N>
-        inline Vector<T, N>& operator-=(Vector<T, N>&, const Vector<T, N>&);
         //! Differences each Vector component with a scalar.
         template<typename T, unsigned int N>
         inline Vector<T, N> operator-(const Vector<T, N>&, T);
@@ -149,9 +174,6 @@ namespace libxaos {
         template<typename T, unsigned int N>
         inline T magnitude2(const Vector<T, N>&);
 
-        //! Calculates the Dot Product of two Vectors.
-        template<typename T, unsigned int N>
-        inline T dot(const Vector<T, N>&, const Vector<T, N>&);
         //! Calculates the Cross Product of two Vectors (only valid for N == 3).
         template<typename T, unsigned int N>
         inline T cross(const Vector<T, N>&, const Vector<T, N>&);
