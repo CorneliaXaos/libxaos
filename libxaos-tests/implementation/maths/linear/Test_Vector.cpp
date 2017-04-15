@@ -1,6 +1,6 @@
 /**
  *  @file Test_Vector.cpp
- *  @brief Tests: libxaos-maths:Vector.h
+ *  @brief Tests: libxaos-maths:linear/Vector.h
  *
  *  Constructs several Vectors and tests the implementation of all operations.
  */
@@ -17,7 +17,7 @@ using IntVector3 = libxaos::linear::Vector<int, 3>;
 using IntVector4 = libxaos::linear::Vector<int, 4>;
 using FloatVector3 = libxaos::linear::Vector<float, 3>;
 
-TEST_CASE("MATHS:Vector | Can Create Vectors", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Vector | Can Create Vectors", "[maths]") {
     // Default initialize several Vectors
     volatile IntVector1 vec1 {};
     volatile IntVector2 vec2 {};
@@ -32,7 +32,7 @@ TEST_CASE("MATHS:Vector | Can Create Vectors", "[maths]") {
     REQUIRE(vec6[2] == 5);
 }
 
-TEST_CASE("MATHS:Vector | Can Access Vector Data", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Vector | Can Access Vector Data", "[maths]") {
     IntVector4 vec {3, 5, 7, 9};
 
     REQUIRE(vec.x() == 3);
@@ -42,7 +42,7 @@ TEST_CASE("MATHS:Vector | Can Access Vector Data", "[maths]") {
     REQUIRE(vec.at(3) == 9);
 }
 
-TEST_CASE("MATHS:Vector | Can Set Vector Data", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Vector | Can Set Vector Data", "[maths]") {
     IntVector4 vec {};
     vec.x(3);
     vec.y(5);
@@ -55,7 +55,7 @@ TEST_CASE("MATHS:Vector | Can Set Vector Data", "[maths]") {
     REQUIRE(vec[3]  == 9);
 }
 
-TEST_CASE("MATHS:Vector | Vector (In)Equality", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Vector | Vector (In)Equality", "[maths]") {
     IntVector3 vec1 {1, 3, 5};
     IntVector3 vec2 {2, 4, 6};
     IntVector3 vec3 {1, 3, 5};
@@ -64,14 +64,14 @@ TEST_CASE("MATHS:Vector | Vector (In)Equality", "[maths]") {
     REQUIRE(vec1 != vec2);
 }
 
-TEST_CASE("MATHS:Vector | Vector Negation", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Vector | Vector Negation", "[maths]") {
     IntVector3 vec {1, 3, 5};
     IntVector3 neg = -vec;
 
     REQUIRE((neg == IntVector3{-1, -3, -5}));
 }
 
-TEST_CASE("MATHS:Vector | Vector Scaling (Multiplication)", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Vector | Vector Scaling (Multiplication)", "[maths]") {
     IntVector3 vec {1, 3, 5};
     IntVector3 scale1 = vec * 2;
     IntVector3 scale2 = 3 * vec;
@@ -82,7 +82,7 @@ TEST_CASE("MATHS:Vector | Vector Scaling (Multiplication)", "[maths]") {
     REQUIRE((scale2 == IntVector3{3, 9, 15}));
 }
 
-TEST_CASE("MATHS:Vector | Vector Scaling (Division)", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Vector | Vector Scaling (Division)", "[maths]") {
     IntVector3 vec {6, 18, 30};
     IntVector3 scale = vec / 2;
     vec /= 3;
@@ -91,7 +91,7 @@ TEST_CASE("MATHS:Vector | Vector Scaling (Division)", "[maths]") {
     REQUIRE((vec == IntVector3{2, 6, 10}));
 }
 
-TEST_CASE("MATHS:Vector | Vector Addition", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Vector | Vector Addition", "[maths]") {
     IntVector3 vec1 {1, 3, 5};
     IntVector3 vec2 {2, 4, 6};
     IntVector3 vec3 {3, 5, 7};
@@ -106,7 +106,7 @@ TEST_CASE("MATHS:Vector | Vector Addition", "[maths]") {
     REQUIRE((vec6 == IntVector3{7, 9, 11}));
 }
 
-TEST_CASE("MATHS:Vector | Vector Subtraction", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Vector | Vector Subtraction", "[maths]") {
     IntVector3 vec1 {1, 3, 5};
     IntVector3 vec2 {2, 4, 6};
     IntVector3 vec3 {3, 5, 7};
@@ -119,7 +119,7 @@ TEST_CASE("MATHS:Vector | Vector Subtraction", "[maths]") {
     REQUIRE((vec5 == IntVector3{-5, -3, -1}));
 }
 
-TEST_CASE("MATHS:Vector | Vector Magnitudes", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Vector | Vector Magnitudes", "[maths]") {
     IntVector2 vec1 {3, 4};
     IntVector2 vec2 {5, 6};
     FloatVector3 vec3 {1.5F, 2.5F, 3.5F};
@@ -130,14 +130,14 @@ TEST_CASE("MATHS:Vector | Vector Magnitudes", "[maths]") {
             sqrt(1.5F * 1.5F + 2.5F * 2.5F + 3.5F * 3.5F)) < 0.001F);
 }
 
-TEST_CASE("MATHS:Vector | Dot Product", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Vector | Dot Product", "[maths]") {
     IntVector4 vec1 {1, 2, 3, 4};
     IntVector4 vec2 {5, 6, 7, 8};
 
     REQUIRE((dot(vec1, vec2) == 70));
 }
 
-TEST_CASE("MATHS:Vector | Cross Product", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Vector | Cross Product", "[maths]") {
     IntVector3 vec1 {1, 3, 5};
     IntVector3 vec2 {2, 4, 6};
     IntVector3 vec3 = cross(vec1, vec2);
@@ -145,7 +145,7 @@ TEST_CASE("MATHS:Vector | Cross Product", "[maths]") {
     REQUIRE((vec3 == IntVector3{-2, 4, -2}));
 }
 
-TEST_CASE("MATHS:Vector | Normalization", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Vector | Normalization", "[maths]") {
     FloatVector3 vec1 {1, 3, 5};
     FloatVector3 vec2 {-1, -3, -5};
     FloatVector3 normalized = getNormalized(vec1);

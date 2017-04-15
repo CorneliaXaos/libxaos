@@ -1,6 +1,6 @@
 /**
  *  @file Test_affine.cpp
- *  @brief Tests: libxaos-maths:affine.h
+ *  @brief Tests: libxaos-maths:linear/affine.h
  *
  *  Tests the affine transform creation functions in the affine namespace.
  */
@@ -27,7 +27,7 @@ using namespace libxaos::linear::affine;
 // And finally a constant expression:
 constexpr double PI() {return std::acos(-1);}
 
-TEST_CASE("MATHS:affine | 2D Scaling", "[maths]") {
+TEST_CASE("MATHS:LINEAR/affine | 2D Scaling", "[maths]") {
     FloatVector3 vec {1, 5, 1}; // homogenous
     FloatMatrix3 scale1 = get2DScaling(2.0F, 2.0F);
     FloatMatrix3 scale2 = get2DScaling(FloatVector2{3, 5});
@@ -44,7 +44,7 @@ TEST_CASE("MATHS:affine | 2D Scaling", "[maths]") {
     REQUIRE((result2.y() - 25 < 0.001F));
 }
 
-TEST_CASE("MATHS:affine | 3D Scaling", "[maths]") {
+TEST_CASE("MATHS:LINEAR/affine | 3D Scaling", "[maths]") {
     FloatVector4 vec {1, 5, 10, 1}; // homogenous
     FloatMatrix4 scale1 = get3DScaling(2.0F, 2.0F, 2.0F);
     FloatMatrix4 scale2 = get3DScaling(FloatVector3{3.0F, 5.0F, 7.0F});
@@ -60,7 +60,7 @@ TEST_CASE("MATHS:affine | 3D Scaling", "[maths]") {
     REQUIRE((result2.z() - 70 < 0.001F));
 }
 
-TEST_CASE("MATHS:affine | 2D Rotation Simple", "[maths]") {
+TEST_CASE("MATHS:LINEAR/affine | 2D Rotation Simple", "[maths]") {
     FloatVector3 vec1 {1, 0, 1};
     FloatVector3 vec2 {0, 1, 1};
     FloatMatrix3 rot1 = get2DRotation(static_cast<float>(PI() / 2.0));
@@ -79,7 +79,7 @@ TEST_CASE("MATHS:affine | 2D Rotation Simple", "[maths]") {
     REQUIRE((result2.z() -  1 < 0.001F));
 }
 
-TEST_CASE("MATHS:affine | 2D Rotation Onto", "[maths]") {
+TEST_CASE("MATHS:LINEAR/affine | 2D Rotation Onto", "[maths]") {
     FloatVector3 vec {1, 0, 1};
     FloatVector2 source {1, 0};
     FloatVector2 target {-1, -1};
@@ -94,7 +94,7 @@ TEST_CASE("MATHS:affine | 2D Rotation Onto", "[maths]") {
     REQUIRE((result.z() -          1 < 0.001F));
 }
 
-TEST_CASE("MATHS:affine | 3D Rotation Simple", "[maths]") {
+TEST_CASE("MATHS:LINEAR/affine | 3D Rotation Simple", "[maths]") {
     FloatVector4 vec1 {1, 0, 0, 1};
     FloatVector4 vec2 {0, 1, 0, 1};
     FloatVector4 vec3 {0, 0, 1, 1};
@@ -125,7 +125,7 @@ TEST_CASE("MATHS:affine | 3D Rotation Simple", "[maths]") {
     REQUIRE((result3[3]  - 1 < 0.001F));
 }
 
-TEST_CASE("MATHS:affine | 3D Rotation Onto", "[maths]") {
+TEST_CASE("MATHS:LINEAR/affine | 3D Rotation Onto", "[maths]") {
     FloatVector4 vec {1, 0, 0, 1};
     FloatVector3 source {1, 0, 0};
     FloatVector3 target {1, 2, 3};
@@ -141,7 +141,7 @@ TEST_CASE("MATHS:affine | 3D Rotation Onto", "[maths]") {
     REQUIRE((result[3]  -          1 < 0.001F));
 }
 
-TEST_CASE("MATHS:affine | 3D Rotation Arbitrary", "[maths]") {
+TEST_CASE("MATHS:LINEAR/affine | 3D Rotation Arbitrary", "[maths]") {
     FloatVector4 vec {1, 0, 0, 1};
     FloatVector3 axis {0, 0, 1};
     FloatMatrix4 rot = get3DRotationArbitrary(static_cast<float>(PI() / 2.0),
@@ -156,7 +156,7 @@ TEST_CASE("MATHS:affine | 3D Rotation Arbitrary", "[maths]") {
     REQUIRE((result[3]  - 1 < 0.001F));
 }
 
-TEST_CASE("MATHS:affine | 2D Translation", "[maths]") {
+TEST_CASE("MATHS:LINEAR/affine | 2D Translation", "[maths]") {
     FloatVector3 vec1 {0, 0, 1};
     FloatVector3 vec2 {1, 1, 1};
     FloatMatrix3 trans1 = get2DTranslation(5.0F, -5.0F);
@@ -176,7 +176,7 @@ TEST_CASE("MATHS:affine | 2D Translation", "[maths]") {
 
 }
 
-TEST_CASE("MATHS:affine | 3D Translation", "[maths]") {
+TEST_CASE("MATHS:LINEAR/affine | 3D Translation", "[maths]") {
     FloatVector4 vec1 {0, 0, 0, 1};
     FloatVector4 vec2 {1, 1, 1, 1};
     FloatMatrix4 trans1 = get3DTranslation(5.0F, -5.0F, 5.0F);

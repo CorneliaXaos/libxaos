@@ -8,7 +8,7 @@
 #include "utility/cpu.h"
 
 #ifdef LIBXAOS_FLAG_CPU_INTEL
-    #include "emmintrin.h" // Pull in SSE2 intel intrinsics
+    #include "x86intrin.h" // Pull in SSE4.2 intel intrinsics
 #endif
 
 #if defined(LIBXAOS_FLAG_DISABLE_SSE) && defined(LIBXAOS_FLAG_REQUIRE_SSE)
@@ -18,6 +18,42 @@
 #ifndef     LIBXAOS_FLAG_DISABLE_SSE
 namespace libxaos {
     namespace sse {
+
+        //! A useful constexpr for determining if a type can be used with SSE
+        template<typename T>
+        bool constexpr canUseSSE() {
+            #ifdef LIBXAOS_FLAG_CPU_INTEL
+                return sizeof(T) < 16;
+            #else
+                return false;
+            #endif
+        }
+
+        template<typename T>
+        union SSEType;
+
+        // Forward declare intrinsic architecture specific options
+        //! Compare Equality
+        template<typename T>
+        inline bool operator==(const SSEType<T>&, const SSEType<T>&);
+        //! Negation
+        template<typename T>
+        inline SSEType<T> operator-(const SSEType<T>&);
+        //! Addition
+        template<typename T>
+        inline SSEType<T>& operator+=(SSEType<T>&, const SSEType<T>&);
+        //! Subtraction
+        template<typename T>
+        inline SSEType<T>& operator-=(SSEType<T>&, const SSEType<T>&);
+        //! Multiplication
+        template<typename T>
+        inline SSEType<T>& operator*=(SSEType<T>&, const SSEType<T>&);
+        //! Division
+        template<typename T>
+        inline SSEType<T>& operator/=(SSEType<T>&, const SSEType<T>&);
+        //! Dot Product
+        template<typename T>
+        inline T dot(const SSEType<T>&, const SSEType<T>&);
 
         /**
          *  @brief A wrapper around the "sse" types provided by different cpus.
@@ -53,34 +89,29 @@ namespace libxaos {
                 SSEType<T>& operator=(SSEType<T>&&);
 
                 //! Gets an element by index
-                T& operator[](unsigned int);
+                inline T& operator[](unsigned int);
                 //! Gets a const element by index
-                const T& operator[](unsigned int) const;
+                inline const T& operator[](unsigned int) const;
 
                 //! Gets an element by index safely
-                T& at(unsigned int);
+                inline T& at(unsigned int);
                 //! Gets a const element by index safely
-                const T& at(unsigned int) const;
+                inline const T& at(unsigned int) const;
 
-                //! Compares two SSETypes for equality
-                bool operator==(const SSEType<T>&);
-                //! Compares two SSETypes for inequality
-                bool operator!=(const SSEType<T>&);
-
+                //! The number of members bundled into this SSEType
+                static constexpr const size_t MEMBER_COUNT =
                 #ifdef LIBXAOS_FLAG_CPU_INTEL
-                    static_assert(sizeof(T) < 16, "SSE unnecessary for type.");
-                    //! The number of members bundled into this SSEType
-                    static constexpr const size_t BUNDLED_MEMBERS =
-                            16 / sizeof(T); // 16 bytes divided by sizeof(T)
+                        sizeof(__m128) / sizeof(T);
+                    static_assert(canUseSSE<T>(), "SSE unnecessary for type.");
                 #endif
 
             private:
-                #ifdef LIBXAOS_FLAG_CPU_INTEL
-                    T _data[BUNDLED_MEMBERS];
+                T _data[MEMBER_COUNT];
 
+                #ifdef LIBXAOS_FLAG_CPU_INTEL
                     // We'll only use one of the following based on T
-                    __m128 _float;
                     __m128i _int;
+                    __m128 _float;
                     __m128d _double;
                 #else
                     static_assert(false,
@@ -88,72 +119,48 @@ namespace libxaos {
                 #endif
 
                 //! Allow the equality operator to access internals
-                template<typename S>
-                friend bool operator==(const SSEType<S>&, const SSEType<S>&);
+                friend bool operator==<T>(const SSEType<T>&, const SSEType<T>&);
 
                 //! Allow the negation operator to access internals
-                template<typename S>
-                friend SSEType<S> operator-(const SSEType<S>&);
+                friend SSEType<T> operator-<T>(const SSEType<T>&);
 
                 //! Allow the addition operator to access internals
-                template<typename S>
-                friend SSEType<S>& operator+=(SSEType<S>&, const SSEType<S>&);
+                friend SSEType<T>& operator+=<T>(SSEType<T>&,
+                        const SSEType<T>&);
 
                 //! Allow the subtraction operator to access internals
-                template<typename S>
-                friend SSEType<S>& operator-=(SSEType<S>&, const SSEType<S>&);
+                friend SSEType<T>& operator-=<T>(SSEType<T>&,
+                        const SSEType<T>&);
 
                 //! Allow the multiplication operator to access internals
-                template<typename S>
-                friend SSEType<S>& operator*=(SSEType<S>&, const SSEType<S>&);
+                friend SSEType<T>& operator*=<T>(SSEType<T>&,
+                        const SSEType<T>&);
 
                 //! Allow the division operator to access internals
-                template<typename S>
-                friend SSEType<S>& operator/=(SSEType<S>&, const SSEType<S>&);
+                friend SSEType<T>& operator/=<T>(SSEType<T>&,
+                        const SSEType<T>&);
 
                 //! Allow the dot product function to access internals
-                template<typename S>
-                friend T dot(const SSEType<S>&, const SSEType<S>&);
+                friend T dot<T>(const SSEType<T>&, const SSEType<T>&);
         };
 
-        //! Compare Equality
-        template<typename T>
-        inline bool operator==(const SSEType<T>&, const SSEType<T>&);
+        // Architecture agnostic
         //! Compare Inequality
         template<typename T>
         inline bool operator!=(const SSEType<T>&, const SSEType<T>&);
-
-        //! Negation
-        template<typename T>
-        inline SSEType<T> operator-(const SSEType<T>&);
-
         //! Addition
         template<typename T>
         inline SSEType<T> operator+(const SSEType<T>&, const SSEType<T>&);
-        template<typename T>
-        inline SSEType<T>& operator+=(SSEType<T>&, const SSEType<T>&);
-
         //! Subtraction
         template<typename T>
         inline SSEType<T> operator-(const SSEType<T>&, const SSEType<T>&);
-        template<typename T>
-        inline SSEType<T>& operator-=(SSEType<T>&, const SSEType<T>&);
-
         //! Multiplication
         template<typename T>
         inline SSEType<T> operator*(const SSEType<T>&, const SSEType<T>&);
-        template<typename T>
-        inline SSEType<T>& operator*=(SSEType<T>&, const SSEType<T>&);
-
         //! Division
         template<typename T>
         inline SSEType<T> operator/(const SSEType<T>&, const SSEType<T>&);
-        template<typename T>
-        inline SSEType<T>& operator/=(SSEType<T>&, const SSEType<T>&);
 
-        //! Dot Product
-        template<typename T>
-        inline T dot(const SSEType<T>&, const SSEType<T>&);
     }
 }
 
@@ -161,7 +168,7 @@ namespace libxaos {
 #include "SSEType-tpp.h"
 
 #ifdef LIBXAOS_FLAG_CPU_INTEL
-    #include "intel/SSEType-ttp.h"
+    #include "__internal__/intel/SSEType-tpp.h"
 #endif
 
 #endif   // LIBXAOS_FLAG_DISABLE_SSE

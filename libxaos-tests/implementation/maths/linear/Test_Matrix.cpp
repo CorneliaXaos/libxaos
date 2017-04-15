@@ -1,6 +1,6 @@
 /**
  *  @file Test_Matrix.cpp
- *  @brief Tests: libxaos-maths:Matrix.h
+ *  @brief Tests: libxaos-maths:linear/Matrix.h
  *
  *  Constructs several Matrices and tests the implementation of all operations.
  */
@@ -20,7 +20,7 @@ using IntVector3 = libxaos::linear::Vector<int, 3>;
 
 using FloatMatrix4 = libxaos::linear::Matrix<float, 4, 4>;
 
-TEST_CASE("MATHS:Matrix | Can Create Matrices", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Matrix | Can Create Matrices", "[maths]") {
     IntMatrix3 mat1 {IntMatrix3::ZERO};
     IntMatrix3 mat2 {IntMatrix3::IDENTITY};
     IntMatrix3 mat3 {
@@ -46,7 +46,7 @@ TEST_CASE("MATHS:Matrix | Can Create Matrices", "[maths]") {
     }
 }
 
-TEST_CASE("MATHS:Matrix | Can Access Columns by reference", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Matrix | Can Access Columns by reference", "[maths]") {
     IntMatrix3 mat {
         {
             {1, 2, 3},
@@ -66,7 +66,7 @@ TEST_CASE("MATHS:Matrix | Can Access Columns by reference", "[maths]") {
     REQUIRE((mat[2] == IntMatrix3::ColumnType{1, 2, 3}));
 }
 
-TEST_CASE("MATHS:Matrix | Can Access Columns", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Matrix | Can Access Columns", "[maths]") {
     IntMatrix3 mat {
         {
             {1, 2, 3},
@@ -84,7 +84,7 @@ TEST_CASE("MATHS:Matrix | Can Access Columns", "[maths]") {
     REQUIRE((col1 == IntMatrix3::ColumnType{2, 5, 8}));
 }
 
-TEST_CASE("MATHS:Matrix | Can Access Rows", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Matrix | Can Access Rows", "[maths]") {
     IntMatrix3 mat {
         {
             {1, 2, 3},
@@ -102,7 +102,7 @@ TEST_CASE("MATHS:Matrix | Can Access Rows", "[maths]") {
     REQUIRE((row1 == IntMatrix3::RowType{4, 5, 6}));
 }
 
-TEST_CASE("MATHS:Matrix | Can Compare Matrices", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Matrix | Can Compare Matrices", "[maths]") {
     IntMatrix3 mat1 {IntMatrix3::ZERO};
     IntMatrix3 mat2 {IntMatrix3::ZERO};
     IntMatrix3 mat3 {IntMatrix3::IDENTITY};
@@ -111,7 +111,7 @@ TEST_CASE("MATHS:Matrix | Can Compare Matrices", "[maths]") {
     REQUIRE(mat1 != mat3);
 }
 
-TEST_CASE("MATHS:Matrix | Can Transpose Matrices", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Matrix | Can Transpose Matrices", "[maths]") {
     IntMatrix3 mat1 {
         {
             {1, 2, 3},
@@ -134,7 +134,7 @@ TEST_CASE("MATHS:Matrix | Can Transpose Matrices", "[maths]") {
     REQUIRE(mat3 == mat1);
 }
 
-TEST_CASE("MATHS:Matrix | Can Inverse Matrices", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Matrix | Can Inverse Matrices", "[maths]") {
     FloatMatrix4 mat1 {
         {
             {1,  2,  3,  4},
@@ -165,7 +165,7 @@ TEST_CASE("MATHS:Matrix | Can Inverse Matrices", "[maths]") {
     }
 }
 
-TEST_CASE("MATHS:Matrix | Can Negate Matrices", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Matrix | Can Negate Matrices", "[maths]") {
     IntMatrix3 mat1 {
         {
             {1, 2, 3},
@@ -184,7 +184,7 @@ TEST_CASE("MATHS:Matrix | Can Negate Matrices", "[maths]") {
     REQUIRE(-mat1 == mat2);
 }
 
-TEST_CASE("MATHS:Matrix | Can Add Matrices", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Matrix | Can Add Matrices", "[maths]") {
     IntMatrix3 mat1 {
         {
             {1, 2, 3},
@@ -207,7 +207,7 @@ TEST_CASE("MATHS:Matrix | Can Add Matrices", "[maths]") {
     REQUIRE(mat3 == mat2);
 }
 
-TEST_CASE("MATHS:Matrix | Can Subtract Matrices", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Matrix | Can Subtract Matrices", "[maths]") {
     IntMatrix3 mat1 {
         {
             {1, 2, 3},
@@ -224,7 +224,7 @@ TEST_CASE("MATHS:Matrix | Can Subtract Matrices", "[maths]") {
     REQUIRE(mat3 == mat2);
 }
 
-TEST_CASE("MATHS:Matrix | Can Divide Matrices by Primitives", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Matrix | Can Divide Matrices by Primitives", "[maths]") {
     FloatMatrix4 mat1 {
         {
             { 2,  4,  6,  8},
@@ -257,7 +257,7 @@ TEST_CASE("MATHS:Matrix | Can Divide Matrices by Primitives", "[maths]") {
     REQUIRE(mat2 == ans);
 }
 
-TEST_CASE("MATHS:Matrix | Matrix Multiplication", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Matrix | Matrix Multiplication", "[maths]") {
     IntMatrix3 mat1 {
         {
             {1, 2, 3},
@@ -281,7 +281,7 @@ TEST_CASE("MATHS:Matrix | Matrix Multiplication", "[maths]") {
     REQUIRE(mat3 == mat2);
 }
 
-TEST_CASE("MATHS:Matrix | Matrix and Primitive Multiplication", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Matrix | Matrix and Primitive Multiplication", "[maths]") {
     IntMatrix3 mat1 {
         {
             {1, 4, 7},
@@ -318,7 +318,7 @@ TEST_CASE("MATHS:Matrix | Matrix and Primitive Multiplication", "[maths]") {
     REQUIRE(mat4 == mat5);
 }
 
-TEST_CASE("MATHS:Matrix | Matrix and Vector Multiplication", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Matrix | Matrix and Vector Multiplication", "[maths]") {
     IntMatrix3 mat {
         {
             {1, 2, 3},
@@ -332,7 +332,7 @@ TEST_CASE("MATHS:Matrix | Matrix and Vector Multiplication", "[maths]") {
     REQUIRE((vec * mat == IntVector3{30, 36, 42}));
 }
 
-TEST_CASE("MATHS:Matrix | Matrices are 'resizable'", "[maths]") {
+TEST_CASE("MATHS:LINEAR/Matrix | Matrices are 'resizable'", "[maths]") {
     IntMatrix3 mat1 {
         {
             {1, 2, 3},

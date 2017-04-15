@@ -112,7 +112,11 @@
 		<Unit filename="interface/linear/Vector.h" />
 		<Unit filename="interface/linear/affine-tpp.h" />
 		<Unit filename="interface/linear/affine.h" />
+		<Unit filename="interface/sse/SSEType-tpp.h" />
 		<Unit filename="interface/sse/SSEType.h" />
+		<Unit filename="interface/sse/__internal__/intel/SSEType-tpp.h" />
+		<Unit filename="interface/sse/__internal__/intel/SSETypeFloating-tpp.h" />
+		<Unit filename="interface/sse/__internal__/intel/SSETypeIntegral-tpp.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

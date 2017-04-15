@@ -78,6 +78,7 @@
 			<Add alias="ALL" targets="Debug_x86;Release_x86;Debug_x86_64;Release_x86_64;" />
 		</VirtualTargets>
 		<Compiler>
+			<Add option="-march=corei7-avx" />
 			<Add option="-Wnon-virtual-dtor" />
 			<Add option="-Wshadow" />
 			<Add option="-Winit-self" />
@@ -96,7 +97,6 @@
 			<Add option="-Wmain" />
 			<Add option="-pedantic-errors" />
 			<Add option="-pedantic" />
-			<Add option="-Wfatal-errors" />
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
 			<Add option="-std=c++11" />
@@ -123,6 +123,7 @@
 		<Unit filename="implementation/maths/linear/Test_Matrix.cpp" />
 		<Unit filename="implementation/maths/linear/Test_Vector.cpp" />
 		<Unit filename="implementation/maths/linear/Test_affine.cpp" />
+		<Unit filename="implementation/maths/sse/Test_SSEType.cpp" />
 		<Unit filename="interface/catch.hpp" />
 		<Extensions>
 			<code_completion />
