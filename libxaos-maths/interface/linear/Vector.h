@@ -134,7 +134,7 @@ namespace libxaos {
                         a[i] /= scale;
                     }
                 }
-            }
+            };
         #endif
 
         // Forward declare the class

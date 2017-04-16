@@ -15,14 +15,15 @@
     static_assert(false, "Cannot DISABLE and REQUIRE SSE simultaneously!");
 #endif
 
-#ifndef     LIBXAOS_FLAG_DISABLE_SSE
 namespace libxaos {
     namespace sse {
 
         //! A useful constexpr for determining if a type can be used with SSE
         template<typename T>
         bool constexpr canUseSSE() {
-            #ifdef LIBXAOS_FLAG_CPU_INTEL
+            #if defined(LIBXAOS_FLAG_DISABLE_SSE)
+                return false;
+            #elif defined(LIBXAOS_FLAG_CPU_INTEL)
                 return sizeof(T) < 16;
             #else
                 return false;
@@ -31,6 +32,13 @@ namespace libxaos {
 
         template<typename T>
         union SSEType;
+
+    }
+}
+
+#ifndef     LIBXAOS_FLAG_DISABLE_SSE
+namespace libxaos {
+    namespace sse {
 
         // Forward declare intrinsic architecture specific options
         //! Compare Equality
