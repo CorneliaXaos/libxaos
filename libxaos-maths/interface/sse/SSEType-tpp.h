@@ -14,7 +14,7 @@ namespace libxaos {
 
         // Default constructor redirects to expansion constructor
         template<typename T>
-        SSEType<T>::SSEType() : SSEType<T>{T{0}} {}
+        SSEType<T>::SSEType() : SSEType<T>(T{0}) {}
         template<typename T>
         SSEType<T>::SSEType(T val) {
             for (unsigned int i = 0; i < SSEType<T>::MEMBER_COUNT; i++) {

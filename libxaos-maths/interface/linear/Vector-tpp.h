@@ -13,19 +13,19 @@ namespace libxaos {
 
         // Constructors
         template<typename T, unsigned int N>
-        Vector<T, N>::Vector() : _data(std::valarray<T>(N)) {} // Defaults
+        Vector<T, N>::Vector() : _data(VectorType{}) {} // Defaults
         template<typename T, unsigned int N>
         Vector<T, N>::Vector(std::initializer_list<T> init) : Vector<T, N>{} {
             int index = 0;
             for (T val : init) {
-                _data[index++] = val;
-                if (index == N) break;
+                (*this)[index] = val;
+                if (++index == N) break;
             }
         }
         template<typename T, unsigned int N>
         Vector<T, N>::Vector(T val) : Vector<T, N>{} {
             for (unsigned int i = 0; i < N; i++) {
-                _data[i] = val;
+                (*this)[i] = val;
             }
         }
         template<typename T, unsigned int N>
@@ -88,11 +88,11 @@ namespace libxaos {
 
         template<typename T, unsigned int N>
         inline T& Vector<T, N>::operator[](unsigned int index) {
-            return _data[index];
+            return VectorData<T, N, canUseSSE<T>()>::index(_data, index);
         }
         template<typename T, unsigned int N>
         inline const T& Vector<T, N>::operator[](unsigned int index) const {
-            return _data[index];
+            return VectorData<T, N, canUseSSE<T>()>::index(_data, index);
         }
 
         template<typename T, unsigned int N>
@@ -112,8 +112,7 @@ namespace libxaos {
         template<typename T, unsigned int N>
         inline bool operator==(const Vector<T, N>& a,
                 const Vector<T, N>& b) {
-            std::valarray<bool> intermediate = a._data == b._data;
-            return intermediate.min() == true;
+            return a._data == b._data;
         }
         template<typename T, unsigned int N>
         inline bool operator!=(const Vector<T, N>& a, const Vector<T, N>& b) {
@@ -123,8 +122,10 @@ namespace libxaos {
         // Vector Negation
         template<typename T, unsigned int N>
         inline Vector<T, N> operator-(const Vector<T, N>& vec) {
-            Vector<T, N> ret = vec;
-            ret._data = -ret._data;
+            Vector<T, N> ret {};
+            for (unsigned int i = 0; i < N; i++) {
+                ret[i] = -vec[i];
+            }
             return ret;
         }
 
@@ -141,7 +142,7 @@ namespace libxaos {
         }
         template<typename T, unsigned int N>
         inline Vector<T, N>& operator*=(Vector<T, N>& vec, T scale) {
-            vec._data *= scale;
+            VectorData<T, N, canUseSSE<T>()>::mult(vec._data, scale);
             return vec;
         }
 
@@ -154,7 +155,7 @@ namespace libxaos {
         }
         template<typename T, unsigned int N>
         inline Vector<T, N>& operator/=(Vector<T, N>& vec, T scale) {
-            vec._data /= scale;
+            VectorData<T, N, canUseSSE<T>()>::div(vec._data, scale);
             return vec;
         }
 
@@ -169,7 +170,9 @@ namespace libxaos {
         template<typename T, unsigned int N>
         inline Vector<T, N>& operator+=(Vector<T, N>& a,
                 const Vector<T, N>& b) {
-            a._data += b._data;
+            for (unsigned int i = 0; i < N; i++) {
+                a[i] += b[i];
+            }
             return a;
         }
         template<typename T, unsigned int N>
@@ -194,7 +197,9 @@ namespace libxaos {
         template<typename T, unsigned int N>
         inline Vector<T, N>& operator-=(Vector<T, N>& a,
                 const Vector<T, N>& b) {
-            a._data -= b._data;
+            for (unsigned int i = 0; i < N; i++) {
+                a[i] -= b[i];
+            }
             return a;
         }
         template<typename T, unsigned int N>
@@ -218,8 +223,7 @@ namespace libxaos {
         // Special Products
         template<typename T, unsigned int N>
         inline T dot(const Vector<T, N>& a, const Vector<T, N>& b) {
-            std::valarray<T> mult = a._data * b._data;
-            return mult.sum();
+            return VectorData<T, N, canUseSSE<T>()>::dot(a._data, b._data);
         }
         template<typename T>
         inline Vector<T, 3U> cross(const Vector<T, 3>& a,

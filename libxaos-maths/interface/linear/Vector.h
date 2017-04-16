@@ -1,9 +1,11 @@
 #ifndef     LIBXAOS_MATHS_LINEAR_VECTOR_H
 #define     LIBXAOS_MATHS_LINEAR_VECTOR_H
 
+#include <array>
 #include <initializer_list>
 #include <type_traits>
-#include <valarray>
+
+#include "sse/SSEType.h"
 
 namespace libxaos {
     namespace linear {
@@ -16,7 +18,124 @@ namespace libxaos {
             constexpr bool HasIndex(int n, int index) {
                 return index < n;
             }
+
+            template<typename T>
+            using SSEType = libxaos::sse::SSEType<T>;
+
+            template<typename T>
+            bool constexpr canUseSSE() {
+                return libxaos::sse::canUseSSE<T>();
+            }
         }
+
+        // The VectorData type
+        template<typename T, unsigned int N, bool useSSE>
+        struct VectorData;
+
+        // these wrappers have become unruly... :C
+        #if !defined(LIBXAOS_FLAG_DISABLE_SSE) || defined(LIBXAOS_FLAG_REQUIRE_SSE)
+            template<typename T, unsigned int N>
+            inline unsigned int constexpr arraySize() {
+                return ((N / SSEType<T>::MEMBER_COUNT) * SSEType<T>::MEMBER_COUNT) < N ?
+                        N / SSEType<T>::MEMBER_COUNT + 1 :
+                        N / SSEType<T>::MEMBER_COUNT;
+            }
+
+            template<typename T, unsigned int N>
+            struct VectorData<T, N, true> {
+                static const unsigned int ARRAY_SIZE = arraySize<T, N>();
+                typedef std::array<SSEType<T>, ARRAY_SIZE> type;
+                static inline T& index(type& instance, unsigned int index) {
+                    unsigned int superIndex = index / SSEType<T>::MEMBER_COUNT;
+                    unsigned int subIndex = index -
+                            superIndex * SSEType<T>::MEMBER_COUNT;
+                    return instance[superIndex][subIndex];
+                }
+                static inline const T& index(const type& instance,
+                        unsigned int index) {
+                    unsigned int superIndex = index / SSEType<T>::MEMBER_COUNT;
+                    unsigned int subIndex = index -
+                            superIndex * SSEType<T>::MEMBER_COUNT;
+                    return instance[superIndex][subIndex];
+                }
+                static inline T dot(const type& a, const type& b) {
+                    T ret {};
+                    for (unsigned int i = 0; i < ARRAY_SIZE; i++) {
+                        ret += libxaos::sse::dot(a[i], b[i]);
+                    }
+                    return ret;
+                }
+                static inline void mult(type& a, T scale) {
+                    SSEType<T> scaledVec(scale);
+                    for (unsigned int i = 0; i < ARRAY_SIZE; i++) {
+                        a[i] *= scaledVec;
+                    }
+                }
+                static inline void div(type& a, T scale) {
+                    SSEType<T> scaledVec(scale);
+                    for (unsigned int i = 0; i < ARRAY_SIZE; i++) {
+                        a[i] /= scaledVec;
+                    }
+                }
+            };
+            template<typename T, unsigned int N>
+            struct VectorData<T, N, false> {
+                typedef std::array<T, N> type;
+                static inline T& index(type& instance, unsigned int index) {
+                    return instance[index];
+                }
+                static inline const T& index(const type& instance,
+                        unsigned int index) {
+                    return instance[index];
+                }
+                static inline T dot(const type& a, const type& b) {
+                    T ret {};
+                    for (unsigned int i = 0; i < N; i++) {
+                        ret += a[i] * b[i];
+                    }
+                    return ret;
+                }
+                static inline void mult(type& a, T scale) {
+                    for (unsigned int i = 0; i < N; i++) {
+                        a[i] *= scale;
+                    }
+                }
+                static inline void div(type& a, T scale) {
+                    for (unsigned int i = 0; i < N; i++) {
+                        a[i] /= scale;
+                    }
+                }
+            };
+        #else
+            template<typename T, unsigned int N, bool useSSE>
+            struct VectorData {
+                typedef std::array<T, N> type;
+                static inline T& index(type& instance, unsigned int index) {
+                    return instance[index];
+                }
+                static inline const T& index(const type& instance,
+                        unsigned int index) {
+                    return instance[index];
+                }
+                static inline T dot(const type& a, const type& b) {
+                    T ret {};
+                    for (unsigned int i = 0; i < N; i++) {
+                        ret += a[i] * b[i];
+                    }
+                    return ret;
+                }
+                static inline void mult(type& a, T scale) {
+                    for (unsigned int i = 0; i < N; i++) {
+                        a[i] *= scale;
+                    }
+                }
+                static inline void div(type& a, T scale) {
+                    for (unsigned int i = 0; i < N; i++) {
+                        a[i] /= scale;
+                    }
+                }
+            }
+        #endif
 
         // Forward declare the class
         template<typename T, unsigned int N>
@@ -110,9 +229,12 @@ namespace libxaos {
                 //! The size of this Vector.
                 static constexpr const int SIZE = N;
 
-            private:
                 //! The internal data held within this Vector.
-                std::valarray<T> _data;
+                using VectorType =
+                        typename VectorData<T, N, canUseSSE<T>()>::type;
+
+            private:
+                VectorType _data;
 
                 // Friend Operators
                 //! Allow the equality operator to access _data
